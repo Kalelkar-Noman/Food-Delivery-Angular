@@ -29,7 +29,9 @@
         </li>
 
         <li *ngIf="isLoggedIn" class="nav__item">
-          <a id="OrderHistory" routerLink="OrderHistory" class="nav__link">Order History</a>
+          <a id="OrderHistory" routerLink="OrderHistory" class="nav__link"
+            >Order History</a
+          >
         </li>
       </ul>
 
@@ -78,27 +80,37 @@
     <!-- <%--<input type="search" placeholder="What are you looking for?" class="search__input">--%> -->
     <input
       type="text"
-      ID="Search_text"
-      runat="server"
-      placeholder="What are you looking for?"
+      id="Search_text"
+      placeholder="Search your desired food name"
+      [(ngModel)]="searchItemName"
       class="search__input"
-      OnTextChanged="Search_text_TextChanged"
-      AutoPostBack="true"
+      (keydown)="onSearchKeyDown($event)"
     />
   </section>
   <div class="search_result_container">
     <!-- <asp:Repeater ID="Search_Repeater" runat="server"> -->
     <!-- <ItemTemplate> -->
-
-    <div *ngIf="searchData.length > 0" class="search_result_items">
+    <div
+      *ngFor="let items of SearchItems; index as i"
+      class="search_result_items"
+    >
       <a id="Search_results" class="search_result_items">
         <!-- <%--<a href="#">--%> -->
-        <img src="{{ searchData[0].imageaddress }}" alt="img" />
-        <p>{{ searchData[0].name }}</p>
-        <p>{{ searchData[0].price }}</p>
+        <img [src]="items.item_image" alt="img" />
+        <p>{{ items.item_name }}</p>
+        <p>{{ items.item_price }}</p>
         <!-- <%--</a>--%> -->
       </a>
     </div>
+    <!-- <div *ngIf="searchData.length > 0" class="search_result_items">
+      <a id="Search_results" class="search_result_items">
+
+        <img src="{{ searchData[0].imageaddress }}" alt="img" />
+        <p>{{ searchData[0].name }}</p>
+        <p>{{ searchData[0].price }}</p>
+     
+      </a>
+    </div> -->
 
     <!-- </ItemTemplate> -->
     <!-- </asp:Repeater> -->

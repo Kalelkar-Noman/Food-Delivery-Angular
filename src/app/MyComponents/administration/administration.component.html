@@ -1,1 +1,40 @@
-<p>administration works!</p>
+<div id="admin_container" class="headergap">
+  <div class="admin_input_conatiner">
+    <div class="admin_img_preview">
+      <!-- <asp:Image id="Image_preview" runat="server" /> -->
+      <img src="#" alt="no image to preview" height="100" width="100" />
+    </div>
+    <!-- <asp:FileUpload id="Item_image" runat="server" /> -->
+    <!-- <input type="file" name="imagein" id="imagein"> -->
+    <input
+      type="text"
+      placeholder="Image link here"
+      name="imagein"
+      id="imagein"
+    />
+    <input
+      id="Item_id"
+      type="number"
+      placeholder="id : dont't enter when inserting"
+    />
+    <input id="Item_name" type="text" placeholder="Enter Product Name" />
+    <input id="Item_price" type="number" placeholder="Enter Product Price" />
+    <input
+      id="Item_category"
+      type="text"
+      placeholder="Enter Product Category"
+    />
+    <input
+      id="Item_description"
+      type="text"
+      placeholder="Enter Product description"
+    />
+    <div class="admin_button_container">
+      <button id="admin_add_submit" Text="Add"></button>
+      <button id="admin_update_submit" Text="Update"></button>
+      <button id="admin_search_submit" Text="Search"></button>
+      <button id="admin_delete_submit" Text="Delete"></button>
+    </div>
+  </div>
+  <div class="admin_preview"></div>
+</div>

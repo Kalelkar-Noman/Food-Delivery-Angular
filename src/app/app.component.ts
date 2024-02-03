@@ -1,15 +1,18 @@
-import { CommonModule, NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { SupabaseService } from './supabase.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgIf, RouterLink],
+  imports: [RouterOutlet, NgIf, NgFor, RouterLink, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
+  constructor(private supabaseService: SupabaseService) {}
   title = 'Food-Delivery-Angular';
   access = false;
   isLoggedIn = false;
@@ -43,5 +46,25 @@ export class AppComponent {
   }
   loginOpen() {
     document.getElementById('login')?.classList.add('show-login');
+  }
+  // search
+  SearchItems: any[] = [];
+  searchItemName: string = '';
+  async onSearchKeyDown(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      // Perform actions when Enter is pressed
+      console.log('enter clicked');
+      try {
+        let { data: ItemsSearch, error } = await this.supabaseService.supabase
+          .from('ItemsRegistry')
+          .select('*')
+          .ilike('item_name', `%${this.searchItemName}%`);
+        this.SearchItems = ItemsSearch;
+        console.log(this.searchItemName);
+        console.log(this.SearchItems);
+      } catch (error) {
+        console.error('Error fetching items:', error); // Handle errors gracefully
+      }
+    }
   }
 }
