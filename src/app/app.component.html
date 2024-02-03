@@ -28,8 +28,8 @@
           >
         </li>
 
-        <li class="nav__item">
-          <a routerLink="OrderHistory" class="nav__link">Order History</a>
+        <li *ngIf="isLoggedIn" class="nav__item">
+          <a id="OrderHistory" routerLink="OrderHistory" class="nav__link">Order History</a>
         </li>
       </ul>
 
@@ -48,7 +48,11 @@
       ></i>
 
       <!-- Login button -->
-      <a class="ri-user-line nav__login" id="login-btn"></a>
+      <a
+        class="ri-user-line nav__login"
+        (click)="loginOpen()"
+        id="login-btn"
+      ></a>
 
       <!-- Toggle button -->
       <div class="nav__toggle" (click)="navOpen()" id="nav-toggle">
@@ -70,7 +74,6 @@
       ID="Search_Btn"
       runat="server"
       Text="&#xF0D1;"
-      OnClick="Search_Btn_Click"
     ></button>
     <!-- <%--<input type="search" placeholder="What are you looking for?" class="search__input">--%> -->
     <input
@@ -90,7 +93,7 @@
     <div *ngIf="searchData.length > 0" class="search_result_items">
       <a id="Search_results" class="search_result_items">
         <!-- <%--<a href="#">--%> -->
-        <img src={{searchData[0].imageaddress}} alt="img" />
+        <img src="{{ searchData[0].imageaddress }}" alt="img" />
         <p>{{ searchData[0].name }}</p>
         <p>{{ searchData[0].price }}</p>
         <!-- <%--</a>--%> -->
@@ -109,6 +112,51 @@
     class="ri-close-line search__close"
     (click)="searchClose()"
     id="search-close"
+  ></i>
+</div>
+<!--==================== LOGIN ====================-->
+<div class="login" id="login">
+  <section action="#" class="login__form">
+    <h2 class="login__title">Log In</h2>
+
+    <div class="login__group">
+      <div>
+        <label for="Login_Email" class="login__label">Email</label>
+        <!-- <%--<input type="email" placeholder="Write your email" id="email" class="login__input">--%> -->
+        <input
+          type="email"
+          id="Login_Email"
+          placeholder="Write your email"
+          class="login__input"
+        />
+      </div>
+
+      <div>
+        <label for="Login_password" class="login__label">Password</label>
+        <!-- <%--<input  type="password" placeholder="Enter your password" id="password" class="login__input">--%> -->
+        <input
+          type="password"
+          placeholder="Enter your password"
+          id="Login_password"
+          class="login__input"
+        />
+      </div>
+    </div>
+
+    <div>
+      <p class="login__signup">You do not have an account? <a>Sign up</a></p>
+
+      <a href="#" class="login__forgot">You forgot your password </a>
+
+      <!-- <%--<button type="submit" class="login__button">Log In</button>--%> -->
+      <button class="login__button" id="Login_user">Log In</button>
+    </div>
+  </section>
+
+  <i
+    class="ri-close-line login__close"
+    (click)="loginClose()"
+    id="login-close"
   ></i>
 </div>
 <!-- header end -->

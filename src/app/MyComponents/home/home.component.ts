@@ -17,8 +17,9 @@ export class HomeComponent {
 
   //after view initialised
   async ngAfterViewInit() {
+    this.carouselItems = document.querySelector('.carousel-items');
     await this.ItemsDataFetcher();
-    console.log(this.UniqueCategoryIconList);
+    // console.log(this.UniqueCategoryIconList);
   }
 
   // data fetching and initialising
@@ -28,7 +29,7 @@ export class HomeComponent {
         .from('ItemsRegistry')
         .select('*');
       this.Itemsdata = ItemsRegistry;
-      console.log(this.Itemsdata);
+      // console.log(this.Itemsdata);
       this.UniqueCategoryIconList = [
         ...new Set(this.Itemsdata.map((element) => element.item_category)),
       ];
@@ -52,5 +53,58 @@ export class HomeComponent {
       default:
         return '';
     }
+  }
+  // carousel sliding
+  currentScrollLeft = 0;
+  prevButtonVisible = false;
+  carouselItems = document.querySelector('.carousel-items');
+  // Handle next button click:
+  carouselNextBtnClick() {
+    // let innerCon = carouselItems?.querySelector('.inner-con');
+    let itemWidth = (
+      this.carouselItems?.querySelector('.inner-con') as HTMLElement
+    )?.offsetWidth;
+    this.currentScrollLeft += itemWidth;
+    let maxScrollLeft = this.carouselItems
+      ? this.carouselItems?.scrollWidth - this.carouselItems?.clientWidth
+      : 0;
+    this.currentScrollLeft = Math.min(this.currentScrollLeft, maxScrollLeft);
+    this.carouselItems?.scrollTo({
+      left: this.currentScrollLeft,
+      behavior: 'smooth', // Enable smooth scrolling
+    });
+    this.prevButtonVisible = true;
+    let prevElement = document.getElementById('carousel-prev');
+    if (prevElement) {
+      prevElement.style.visibility = 'visible';
+    }
+  }
+  // Handle prev button click:
+  carouselPrevBtnClick() {
+    let itemWidth = (
+      this.carouselItems?.querySelector('.inner-con') as HTMLElement
+    )?.offsetWidth;
+    this.currentScrollLeft -= itemWidth;
+    // Limit scrolling to prevent going beyond the start
+    this.currentScrollLeft = Math.max(this.currentScrollLeft, 0);
+    this.carouselItems?.scrollTo({
+      left: this.currentScrollLeft,
+      behavior: 'smooth',
+    });
+    // Hide prev button if scrolled back to start
+    if (this.currentScrollLeft === 0) {
+      this.prevButtonVisible = false;
+      let prevElement = document.getElementById('carousel-prev');
+      if (prevElement) {
+        prevElement.style.visibility = 'hidden';
+      }
+    }
+  }
+  // for cart
+  cartClose() {
+    document.getElementById('mySidepanel')?.classList.toggle('active');
+  }
+  cartOpen() {
+    document.getElementById('mySidepanel')?.classList.toggle('active');
   }
 }

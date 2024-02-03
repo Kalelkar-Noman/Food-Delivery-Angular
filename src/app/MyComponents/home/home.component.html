@@ -1,18 +1,27 @@
 <div class="mainpage-container headergap">
-  <div class="carousel-prev">
+  <div
+    id="carousel-prev"
+    (click)="carouselPrevBtnClick()"
+    class="carousel-prev"
+  >
     <div class="carousel-arrow"><</div>
   </div>
-  <div class="carousel-next">
+  <div
+    id="carousel-next"
+    (click)="carouselNextBtnClick()"
+    class="carousel-next"
+  >
     <div class="carousel-arrow">></div>
   </div>
   <div class="carousel-items">
+    <!-- category items -->
     <span>
       <button id="Inner_Menu" runat="server" class="inner-con inner-con-active">
         <div class="menu-scroller"><span class="category_icon">All</span></div>
         <p class="mybtn">All</p>
       </button>
     </span>
-    <!-- <%--<div class="inner-con" >--%> -->
+
     <span *ngFor="let item of UniqueCategoryIconList; index as i">
       <button id="Inner_Menu" class="inner-con">
         <div class="menu-scroller">
@@ -21,22 +30,21 @@
         <p class="mybtn">{{ item }}</p>
       </button>
     </span>
-    <!-- <%--</div>--%> -->
+    <!-- category items end-->
   </div>
 </div>
 <div class="product-cards">
-  <!-- <asp:Repeater id="Repeater2" runat="server"> -->
-  <!-- <ItemTemplate> -->
-  <div *ngFor="let product of Itemsdata; index as i;" class="product-card">
-    <!-- <div class="badge">Hot</div> -->
+  <!-- products items-->
+  <div *ngFor="let product of Itemsdata; index as i" class="product-card">
+    <div class="badge">Hot</div>
     <a class="product-tumb" id="Link_to_Details">
-      <!-- <%--<div class="product-tumb">--%> -->
       <img loading="lazy" [src]="product.item_image" alt="text" />
-      <!-- <%--</div>--%> -->
     </a>
     <div class="product-details">
       <span class="product-catagory">{{ product.item_category }}</span>
-      <h4><a href="#">{{ product.item_name }}</a></h4>
+      <h4>
+        <a href="#">{{ product.item_name }}</a>
+      </h4>
       <p>{{ product.item_description }}</p>
       <div class="product-bottom-details">
         <div class="product-price">
@@ -50,12 +58,10 @@
       </div>
     </div>
   </div>
-  <!-- </ItemTemplate> -->
-  <!-- </asp:Repeater> -->
+  <!-- products items end -->
 </div>
-<!-- <%--  --%> -->
 
-<button class="open-button" id="cart-button">
+<button class="open-button" (click)="cartOpen()" id="cart-button">
   <svg
     class="icon-cart"
     viewBox="0 0 24.38 30.52"
@@ -71,7 +77,7 @@
   </svg>
 </button>
 <div id="mySidepanel" class="sidepanel headergap">
-  <a href="#" class="closebtn" id="cart-close">×</a>
+  <a href="#" class="closebtn" (click)="cartClose()" id="cart-close">×</a>
   <!-- <p>This is the side panel content.</p> -->
   <!-- <%--<div class="cart-item">
       <h3>Product Name</h3>

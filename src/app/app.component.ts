@@ -5,14 +5,14 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,NgIf, RouterLink],
+  imports: [RouterOutlet, NgIf, RouterLink],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'Food-Delivery-Angular';
   access = false;
-
+  isLoggedIn = false;
   // nav controls
   navOpen() {
     document.getElementById('nav-menu')?.classList.add('show-menu');
@@ -37,4 +37,11 @@ export class AppComponent {
       price: 800,
     },
   ];
+  // login control
+  loginClose() {
+    document.getElementById('login')?.classList.remove('show-login');
+  }
+  loginOpen() {
+    document.getElementById('login')?.classList.add('show-login');
+  }
 }
