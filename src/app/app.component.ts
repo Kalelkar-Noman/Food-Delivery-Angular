@@ -94,6 +94,19 @@ export class AppComponent {
       }
     }
   }
+  async onSearchKeyclick() {
+    try {
+      let { data: ItemsSearch, error } = await this.supabaseService.supabase
+        .from('ItemsRegistry')
+        .select('*')
+        .ilike('item_name', `%${this.searchItemName}%`);
+      this.SearchItems = ItemsSearch;
+      console.log(this.searchItemName);
+      console.log(this.SearchItems);
+    } catch (error) {
+      console.error('Error fetching items:', error); // Handle errors gracefully
+    }
+  }
   // search controls
   searchOpen() {
     document.getElementById('search')?.classList.add('show-search');

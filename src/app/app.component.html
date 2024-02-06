@@ -75,8 +75,8 @@
     <button
       class="ri-search-line search__icon"
       ID="Search_Btn"
-      runat="server"
       Text="&#xF0D1;"
+      (click)="onSearchKeyclick()"
     ></button>
     <!-- <%--<input type="search" placeholder="What are you looking for?" class="search__input">--%> -->
     <input
@@ -85,10 +85,8 @@
       placeholder="Search your desired food name"
       [(ngModel)]="searchItemName"
       class="search__input"
-      (keypress)="onSearchKeyDown($event)"
-     
+      (keydown)="onSearchKeyDown($event)"
     />
-    <!-- (keydown)="onSearchKeyDown($event)" -->
   </section>
   <div class="search_result_container">
     <!-- <asp:Repeater ID="Search_Repeater" runat="server"> -->
