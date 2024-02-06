@@ -40,6 +40,9 @@ export class AppComponent {
       // console.log(this.Userpid);
       if (this.Userpid.access == 'admin') {
         this.access = true;
+        this.isLoggedIn=true
+      }else{
+        this.isLoggedIn=true
       }
     } else {
       document.cookie =
@@ -136,9 +139,13 @@ export class AppComponent {
         document.cookie = `Id=${MyRegistry[0].id}; expires=Fri, 31 Dec 2060 23:59:59 GMT; path=/`;
         document.getElementById('login')?.classList.remove('show-login');
         this.isLoggedIn = true;
+        if (MyRegistry[0].access == 'admin') {
+          this.access = true;
+          this.isLoggedIn = true;
+        }
       }
       this.userToken = this.getCookieValue('Id');
-      if (this.userToken == 'null'){
+      if (this.userToken == 'null') {
         alert('credentials not matched');
       }
       if (error) {
@@ -146,7 +153,6 @@ export class AppComponent {
       }
     } catch (error) {
       console.log('error occured');
-     
     }
   }
 }
