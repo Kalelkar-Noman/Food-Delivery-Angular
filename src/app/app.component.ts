@@ -137,11 +137,16 @@ export class AppComponent {
         document.getElementById('login')?.classList.remove('show-login');
         this.isLoggedIn = true;
       }
+      this.userToken = this.getCookieValue('Id');
+      if (this.userToken == 'null'){
+        alert('credentials not matched');
+      }
       if (error) {
         alert('credentials not matched');
       }
     } catch (error) {
       console.log('error occured');
+     
     }
   }
 }

@@ -15,7 +15,7 @@
           <a routerLink="Contact-Us" class="nav__link">Contact Us</a>
         </li>
 
-        <li class="nav__item">
+        <li *ngIf="isLoggedIn" class="nav__item">
           <a routerLink="CheckOut" class="nav__link">Checkout</a>
         </li>
 
