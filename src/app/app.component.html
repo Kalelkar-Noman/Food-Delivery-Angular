@@ -85,8 +85,10 @@
       placeholder="Search your desired food name"
       [(ngModel)]="searchItemName"
       class="search__input"
-      (keydown)="onSearchKeyDown($event)"
+      (keypress)="onSearchKeyDown($event)"
+     
     />
+    <!-- (keydown)="onSearchKeyDown($event)" -->
   </section>
   <div class="search_result_container">
     <!-- <asp:Repeater ID="Search_Repeater" runat="server"> -->
