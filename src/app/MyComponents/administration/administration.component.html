@@ -2,39 +2,85 @@
   <div class="admin_input_conatiner">
     <div class="admin_img_preview">
       <!-- <asp:Image id="Image_preview" runat="server" /> -->
-      <img src="#" alt="no image to preview" height="100" width="100" />
+      <img [src]="imagePreviews" alt="no image to preview" />
     </div>
     <!-- <asp:FileUpload id="Item_image" runat="server" /> -->
     <!-- <input type="file" name="imagein" id="imagein"> -->
+    <!-- <form action="#"> -->
     <input
       type="text"
       placeholder="Image link here"
       name="imagein"
       id="imagein"
+      [(ngModel)]="imagePreviewsLink"
+      (change)="onchange()"
     />
     <input
       id="Item_id"
-      type="number"
-      placeholder="id : dont't enter when inserting"
+      type="text"
+      [(ngModel)]="id"
+      placeholder="id : only when updating or searching"
     />
-    <input id="Item_name" type="text" placeholder="Enter Product Name" />
-    <input id="Item_price" type="number" placeholder="Enter Product Price" />
+    <input
+      id="Item_name"
+      [(ngModel)]="name"
+      type="text"
+      placeholder="Enter Product Name"
+    />
+    <input
+      id="Item_price"
+      [(ngModel)]="price"
+      type="number"
+      placeholder="Enter Product Price"
+    />
     <input
       id="Item_category"
       type="text"
+      list="previousCategory"
+      [(ngModel)]="category"
       placeholder="Enter Product Category"
     />
+    <datalist id="previousCategory">
+      <option
+        *ngFor="let product of receivedCategoryData; index as i"
+        [value]="product"
+      ></option>
+    </datalist>
+
     <input
       id="Item_description"
       type="text"
       placeholder="Enter Product description"
+      [(ngModel)]="description"
     />
     <div class="admin_button_container">
-      <button id="admin_add_submit" Text="Add"></button>
-      <button id="admin_update_submit" Text="Update"></button>
-      <button id="admin_search_submit" Text="Search"></button>
-      <button id="admin_delete_submit" Text="Delete"></button>
+      <button id="admin_add_submit">Add</button>
+      <button id="admin_update_submit">Update</button>
+      <button id="admin_search_submit" (click)="fetchItems()">Search</button>
+      <button id="admin_delete_submit">Delete</button>
+    </div>
+    <!-- </form> -->
+  </div>
+  <div class="admin_preview">
+    <div class="previewBorder">
+      <h3>ID:4</h3>
+      <div class="flex">
+        <img
+          src="https://images.pexels.com/photos/4767578/pexels-photo-4767578.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+          alt="image"
+          class="data_image"
+        />
+        <div>
+          <p>Category :ghth</p>
+          <p>Name : fbdhvbrubvj</p>
+          <p>Price :</p>
+        </div>
+      </div>
+      <p class="description">
+        Description : Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        Deserunt ducimus ad sit ipsa quam laboriosam accusamus sunt minus
+        blanditiis voluptatum incidunt nobis aut aperiam aliquam, unde labore
+      </p>
     </div>
   </div>
-  <div class="admin_preview"></div>
 </div>

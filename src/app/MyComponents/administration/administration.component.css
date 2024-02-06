@@ -48,7 +48,7 @@
   flex-wrap: wrap;
   margin: 8px 0;
 }
-.admin_button_container input[type="submit"] {
+.admin_button_container button {
   display: inline-block;
   background-color: var(--first-color);
   width: 100%;
@@ -68,13 +68,26 @@
   -ms-flex: 1 0;
   flex: 1 0;
 }
-#ContentPlaceHolder1_GridView1,
-admin_preview > div {
-  width: 100%;
+.previewBorder {
+  border: 1px solid;
+  /* max-height: 150px; */
+  border-radius: 10px;
+  /* min-height: 150px; */
+  padding: 10px;
+  overflow: hidden;
+  margin-bottom: 6px;
 }
-#ContentPlaceHolder1_GridView1 * {
-  text-align: center;
+.description {
+  margin-top: 10px;
+  text-overflow: ellipsis;
+  display: block;
+  max-height: 100px;
+  overflow: hidden scroll;
 }
-#ContentPlaceHolder1_GridView1 td {
-  width: 16.66%;
+.data_image {
+  width: 25%;
+  margin-right: 6px;
+}
+.flex {
+  display: flex;
 }

@@ -11,7 +11,9 @@ import { NgFor } from '@angular/common';
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  constructor(private supabaseService: SupabaseService) {}
+  constructor(private supabaseService: SupabaseService) {
+    // this.supabaseService.setData(this.UniqueCategoryIconList);
+  }
   Itemsdata: any[] = []; //all Items data storing
   UniqueCategoryIconList: Array<string> = []; //for unique category
 

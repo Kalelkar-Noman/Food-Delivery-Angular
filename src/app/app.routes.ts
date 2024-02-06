@@ -4,6 +4,7 @@ import { ContactUsComponent } from './MyComponents/contact-us/contact-us.compone
 import { CheckoutComponent } from './MyComponents/checkout/checkout.component';
 import { AdministrationComponent } from './MyComponents/administration/administration.component';
 import { UserOrderHistoryComponent } from './MyComponents/user-order-history/user-order-history.component';
+import { UserProfileComponent } from './MyComponents/user-profile/user-profile.component';
 
 export const routes: Routes = [
   {
@@ -31,5 +32,10 @@ export const routes: Routes = [
     path: 'OrderHistory',
     component: UserOrderHistoryComponent,
     title: 'Order History',
+  },
+  {
+    path: 'MYProfile',
+    component: UserProfileComponent,
+    title: 'MyProfile',
   },
 ];
