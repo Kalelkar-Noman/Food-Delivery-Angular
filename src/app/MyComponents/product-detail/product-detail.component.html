@@ -1,20 +1,23 @@
-<div class="detailpage-container">
+<div *ngIf="dataAvailable" class="detailpage-container">
   <div class="product-container">
-    <img src="#" alt="Product Image" />
+    <img [src]="image" alt="Product Image" />
     <div class="detail-left">
       <div class="product-info">
         <div>
-          <h2>item_name"</h2>
-          <p>Price: ₹ item_price</p>
+          <h2>{{ name }}</h2>
+          <p>Price: ₹ {{ price }}</p>
         </div>
         <div class="quantity-button" id="quantity-button">
           <div id="add-div">Add</div>
         </div>
         <div>
           <h2>Description:</h2>
-          <p>item_description</p>
+          <p>{{ description ? description : "no description available" }}</p>
         </div>
       </div>
     </div>
   </div>
+</div>
+<div *ngIf="!dataAvailable" class="detailpage-container">
+  <h1>Sorry no data found</h1>
 </div>

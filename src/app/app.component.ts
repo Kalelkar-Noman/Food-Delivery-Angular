@@ -1,6 +1,6 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { SupabaseService } from './supabase.service';
 import { FormsModule } from '@angular/forms';
 
@@ -25,13 +25,16 @@ export class AppComponent {
 
   userToken = this.getCookieValue('Id');
   Userpid: any;
-  constructor(private supabaseService: SupabaseService) {}
+  constructor(
+    private supabaseService: SupabaseService,
+    private router: Router
+  ) {}
   async ngAfterViewInit() {
-    if (this.userToken != 'null') {
+    if (this.userToken && this.userToken != 'null') {
       let { data: MyRegistry, error } = await this.supabaseService.supabase
         .from('MyRegistry')
         .select('*')
-        .eq('id', `64a416d0-e0cf-441c-9d7f-37b237207a06`);
+        .eq('id', this.userToken);
       // console.log(MyRegistry);
       this.Userpid = MyRegistry[0];
       // console.log(this.Userpid);
@@ -40,7 +43,7 @@ export class AppComponent {
       }
     } else {
       document.cookie =
-        'Id=64a416d0-e0cf-441c-9d7f-37b237207a06; expires=Fri, 31 Dec 2060 23:59:59 GMT; path=/';
+        'Id=null; expires=Fri, 31 Dec 2060 23:59:59 GMT; path=/';
     }
   }
   title = 'Food-Delivery-Angular';
@@ -59,7 +62,17 @@ export class AppComponent {
     document.getElementById('login')?.classList.remove('show-login');
   }
   loginOpen() {
-    document.getElementById('login')?.classList.add('show-login');
+    this.userToken = this.getCookieValue('Id');
+    if (this.userToken && this.userToken != 'null') {
+      // location.replace('/MYProfile');
+      this.router.navigate(['MYProfile']);
+    } else {
+      document.getElementById('login')?.classList.add('show-login');
+    }
+  }
+  OpenSignUp() {
+    document.getElementById('login')?.classList.remove('show-login');
+    this.router.navigate(['SignUp']);
   }
   // search
   SearchItems: any[] = [];
@@ -97,4 +110,25 @@ export class AppComponent {
       price: 800,
     },
   ];
+  // Logger
+  emailaddress = '';
+  password = '';
+  async logger() {
+    try {
+      let { data: MyRegistry, error } = await this.supabaseService.supabase
+        .from('MyRegistry')
+        .select('*')
+        .eq('user_email', this.emailaddress);
+      if (MyRegistry && MyRegistry[0].user_password == this.password) {
+        document.cookie = `Id=${MyRegistry[0].id}; expires=Fri, 31 Dec 2060 23:59:59 GMT; path=/`;
+        document.getElementById('login')?.classList.remove('show-login');
+        this.isLoggedIn = true;
+      }
+      if (error) {
+        alert('credentials not matched');
+      }
+    } catch (error) {
+      console.log('error occured');
+    }
+  }
 }

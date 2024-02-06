@@ -5,6 +5,8 @@ import { CheckoutComponent } from './MyComponents/checkout/checkout.component';
 import { AdministrationComponent } from './MyComponents/administration/administration.component';
 import { UserOrderHistoryComponent } from './MyComponents/user-order-history/user-order-history.component';
 import { UserProfileComponent } from './MyComponents/user-profile/user-profile.component';
+import { ProductDetailComponent } from './MyComponents/product-detail/product-detail.component';
+import { UserSignUpComponent } from './MyComponents/user-sign-up/user-sign-up.component';
 
 export const routes: Routes = [
   {
@@ -37,5 +39,15 @@ export const routes: Routes = [
     path: 'MYProfile',
     component: UserProfileComponent,
     title: 'MyProfile',
+  },
+  {
+    path: 'ProductDetails/:itemId',
+    component: ProductDetailComponent,
+    title: 'ProductDetails',
+  },
+  {
+    path: 'SignUp',
+    component: UserSignUpComponent,
+    title: 'SignUp',
   },
 ];

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SupabaseService } from '../../supabase.service';
 import { NgFor } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,7 @@ import { NgFor } from '@angular/common';
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  constructor(private supabaseService: SupabaseService) {
+  constructor(private supabaseService: SupabaseService,private router: Router) {
     // this.supabaseService.setData(this.UniqueCategoryIconList);
   }
   Itemsdata: any[] = []; //all Items data storing
@@ -108,5 +109,11 @@ export class HomeComponent {
   }
   cartOpen() {
     document.getElementById('mySidepanel')?.classList.toggle('active');
+  }
+  // for product details
+  navigateToDetails(itemId: string) {
+    console.log("clicked");
+    
+    this.router.navigate(['ProductDetails', itemId]);
   }
 }

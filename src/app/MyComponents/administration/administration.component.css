@@ -82,7 +82,7 @@
   text-overflow: ellipsis;
   display: block;
   max-height: 100px;
-  overflow: hidden scroll;
+  overflow: hidden auto;
 }
 .data_image {
   width: 25%;

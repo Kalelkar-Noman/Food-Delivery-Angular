@@ -1,4 +1,4 @@
-<div id="admin_container" class="headergap">
+<div *ngIf="access" id="admin_container" class="headergap">
   <div class="admin_input_conatiner">
     <div class="admin_img_preview">
       <!-- <asp:Image id="Image_preview" runat="server" /> -->
@@ -19,7 +19,7 @@
       id="Item_id"
       type="text"
       [(ngModel)]="id"
-      placeholder="id : only when updating or searching"
+      placeholder="id : only on update/search/Delete"
     />
     <input
       id="Item_name"
@@ -54,33 +54,29 @@
       [(ngModel)]="description"
     />
     <div class="admin_button_container">
-      <button id="admin_add_submit">Add</button>
-      <button id="admin_update_submit">Update</button>
+      <button id="admin_add_submit" (click)="insertItems()">Add</button>
+      <button id="admin_update_submit" (click)="updateItems()">Update</button>
       <button id="admin_search_submit" (click)="fetchItems()">Search</button>
-      <button id="admin_delete_submit">Delete</button>
+      <button id="admin_delete_submit" (click)="deleteItems()">Delete</button>
     </div>
     <!-- </form> -->
   </div>
   <div class="admin_preview">
-    <div class="previewBorder">
-      <h3>ID:4</h3>
+    <div
+      (click)="infoLoader(i)"
+      *ngFor="let item of searchData; index as i"
+      class="previewBorder"
+    >
+      <h3>ID:{{ item.item_id }}</h3>
       <div class="flex">
-        <img
-          src="https://images.pexels.com/photos/4767578/pexels-photo-4767578.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-          alt="image"
-          class="data_image"
-        />
+        <img [src]="item.item_image" alt="image" class="data_image" />
         <div>
-          <p>Category :ghth</p>
-          <p>Name : fbdhvbrubvj</p>
-          <p>Price :</p>
+          <p>Category :{{ item.item_category }}</p>
+          <p>Name :{{ item.item_name }}</p>
+          <p>Price :{{ item.item_price }}</p>
         </div>
       </div>
-      <p class="description">
-        Description : Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        Deserunt ducimus ad sit ipsa quam laboriosam accusamus sunt minus
-        blanditiis voluptatum incidunt nobis aut aperiam aliquam, unde labore
-      </p>
+      <p class="description">Description : {{ item.item_description }}</p>
     </div>
   </div>
 </div>

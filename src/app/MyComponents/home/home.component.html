@@ -37,7 +37,7 @@
   <!-- products items-->
   <div *ngFor="let product of Itemsdata; index as i" class="product-card">
     <div class="badge">Hot</div>
-    <a class="product-tumb" id="Link_to_Details">
+    <a (click)="navigateToDetails(product.item_id)" class="product-tumb" id="Link_to_Details">
       <img loading="lazy" [src]="product.item_image" alt="text" />
     </a>
     <div class="product-details">

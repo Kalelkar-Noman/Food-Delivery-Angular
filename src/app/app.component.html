@@ -139,6 +139,7 @@
         <input
           type="email"
           id="Login_Email"
+          [(ngModel)]="emailaddress"
           placeholder="Write your email"
           class="login__input"
         />
@@ -149,6 +150,7 @@
         <!-- <%--<input  type="password" placeholder="Enter your password" id="password" class="login__input">--%> -->
         <input
           type="password"
+          [(ngModel)]="password"
           placeholder="Enter your password"
           id="Login_password"
           class="login__input"
@@ -157,12 +159,16 @@
     </div>
 
     <div>
-      <p class="login__signup">You do not have an account? <a>Sign up</a></p>
+      <p class="login__signup">
+        You do not have an account? <a (click)="OpenSignUp()">Sign up</a>
+      </p>
 
-      <a href="#" class="login__forgot">You forgot your password </a>
+      <!-- <a href="#" class="login__forgot">You forgot your password </a> -->
 
       <!-- <%--<button type="submit" class="login__button">Log In</button>--%> -->
-      <button class="login__button" id="Login_user">Log In</button>
+      <button (click)="logger()" class="login__button" id="Login_user">
+        Log In
+      </button>
     </div>
   </section>
 

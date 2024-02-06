@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { SupabaseService } from '../../supabase.service';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { catchError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-administration',
   standalone: true,
-  imports: [NgFor, FormsModule],
+  imports: [FormsModule, NgFor, NgIf],
   templateUrl: './administration.component.html',
   styleUrl: './administration.component.css',
 })
@@ -18,16 +18,53 @@ export class AdministrationComponent {
   id: string = '';
   name: string = '';
   category: string = '';
-  price: number = 100;
+  price: number = 0;
   description: string = '';
   searchData: any[] = [];
+  access = false;
   onchange() {
     this.imagePreviews = this.imagePreviewsLink;
   }
-  constructor(private supabaseService: SupabaseService) {
+  constructor(
+    private supabaseService: SupabaseService,
+    private router: Router
+  ) {
     this.ItemsDataFetcher();
   }
-  ngAfterViewInit() {}
+  getCookieValue(cookieName: string) {
+    const cookies = document.cookie.split('; ');
+    for (let i = 0; i < cookies.length; i++) {
+      const [name, value] = cookies[i].split('=');
+      if (name === cookieName) {
+        return value;
+      }
+    }
+    return null; // Cookie not found
+  }
+  userToken = this.getCookieValue('Id');
+  async ngOnInit() {
+    // let MyRegistry: any[] = [];
+    this.userToken = this.getCookieValue('Id');
+    if (this.userToken && this.userToken != 'null') {
+      let { data: MyRegistry, error } = await this.supabaseService.supabase
+        .from('MyRegistry')
+        .select('*')
+        .eq('id', this.userToken);
+
+      if (MyRegistry && MyRegistry.length > 0) {
+        if (MyRegistry[0].access === 'admin') {
+          this.access = true;
+        } else {
+          this.router.navigate(['HomePage/Administration']);
+          // location.replace('/'); // Redirect if not admin
+        }
+      } else {
+        this.router.navigate(['HomePage/Administration']);
+      }
+    } else {
+      this.router.navigate(['HomePage/Administration']);
+    }
+  }
   // category list fetching and initialising
   async ItemsDataFetcher() {
     try {
@@ -42,9 +79,69 @@ export class AdministrationComponent {
       console.error('Error fetching items:', error); // Handle errors gracefully
     }
   }
-  async searcher() {}
+  async insertItems() {
+    try {
+      const { data, error } = await this.supabaseService.supabase
+        .from('ItemsRegistry')
+        .insert([
+          {
+            item_name: this.name,
+            item_price: this.price,
+            item_image: this.imagePreviews,
+            item_category: this.category,
+            item_description: this.description,
+          },
+        ])
+        .select();
+      if (error) {
+        throw new Error('Error fetching items:', error);
+      } else {
+        alert('data stored successfully');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async updateItems() {
+    try {
+      const { data, error } = await this.supabaseService.supabase
+        .from('ItemsRegistry')
+        .update([
+          {
+            item_name: this.name,
+            item_price: this.price,
+            item_image: this.imagePreviews,
+            item_category: this.category,
+            item_description: this.description,
+          },
+        ])
+        .select()
+        .eq('item_id', this.id);
+      if (error) {
+        throw new Error('Error fetching items:', error);
+      } else {
+        alert('data updated successfully');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async deleteItems() {
+    try {
+      const { data, error } = await this.supabaseService.supabase
+        .from('ItemsRegistry')
+        .delete()
+        .eq('item_id', this.id);
+      if (error) {
+        throw new Error('Error fetching items:', error);
+      } else {
+        alert('data deleted successfully');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async fetchItems() {
-    let datas;
     try {
       if (this.id.length == 36) {
         const { data, error } = await this.supabaseService.supabase
@@ -55,7 +152,7 @@ export class AdministrationComponent {
         if (error) {
           throw new Error('Error fetching items:', error);
         }
-        datas = data;
+        this.searchData = data;
       } else {
         const { data, error } = await this.supabaseService.supabase
           .from('ItemsRegistry')
@@ -72,16 +169,24 @@ export class AdministrationComponent {
         if (error) {
           throw new Error('Error fetching items:', error);
         }
-        datas = data;
+        data;
 
-        if (datas < 1) {
+        if (data < 1) {
           alert('no data found');
         }
+        this.searchData = data;
+        console.log(this.searchData);
       }
-
-      // console.log(datas.length,datas);
     } catch (error) {
       console.log(error);
     }
+  }
+  infoLoader(index: number) {
+    this.id = this.searchData[index].item_id;
+    this.category = this.searchData[index].item_category;
+    this.price = this.searchData[index].item_price;
+    this.description = this.searchData[index].item_description;
+    this.imagePreviews = this.searchData[index].item_image;
+    this.imagePreviewsLink = this.searchData[index].item_image;
   }
 }

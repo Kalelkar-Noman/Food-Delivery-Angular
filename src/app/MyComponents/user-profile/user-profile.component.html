@@ -10,15 +10,13 @@
           <button
             class="btn btn-sm btn-primary"
             id="Edit"
-            OnClick="Edit_Click"
-            Text="Edit"
-          ></button>
-          <button
-            class="btn btn-sm btn-primary"
-            id="Save"
-            OnClick="Save_Click"
-            Text="Save"
-          ></button>
+            (click)="editEnable()"
+          >
+            Edit
+          </button>
+          <button class="btn btn-sm btn-primary" id="Save" *ngIf="edit">
+            Save
+          </button>
         </div>
       </div>
     </div>
@@ -33,9 +31,11 @@
               >
 
               <input
+                [disabled]="!edit"
                 type="number"
                 required="true"
                 id="Input_number"
+                [(ngModel)]="phoneNumber"
                 class="form-control form-control-alternative"
                 placeholder="Enter phone Number"
               />
@@ -47,9 +47,11 @@
                 Email address</label
               >
               <input
+                [disabled]="!edit"
                 required="true"
                 type="email"
                 id="Input_email"
+                [(ngModel)]="emailaddress"
                 class="form-control form-control-alternative"
                 placeholder="Enter email"
               />
@@ -63,26 +65,40 @@
                 Your name</label
               >
               <input
+                [disabled]="!edit"
                 required="true"
                 type="text"
                 id="Input_name"
+                [(ngModel)]="name"
                 class="form-control form-control-alternative"
                 placeholder="Enter name"
               />
             </div>
           </div>
           <div class="col-lg-6">
-            <div class="form-group focused">
+            <div class="form-group focused eyediv">
               <label class="form-control-label" for="input-last-name">
                 Password</label
               >
               <input
+                [disabled]="!edit"
                 required="true"
-                type="text"
+                [type]="passVisibility"
                 id="Input_password"
+                [(ngModel)]="passwordtext"
                 class="form-control form-control-alternative"
                 placeholder="Enter password"
               />
+              <i
+                *ngIf="passVisibility == 'text'"
+                (click)="togglePassVisibility()"
+                class="ri-eye-line eye"
+              ></i>
+              <i
+                *ngIf="passVisibility == 'password'"
+                (click)="togglePassVisibility()"
+                class="ri-eye-off-line eye"
+              ></i>
             </div>
           </div>
         </div>
@@ -98,7 +114,9 @@
                 Address</label
               >
               <input
+                [disabled]="!edit"
                 id="Input_address"
+                [(ngModel)]="address"
                 class="form-control form-control-alternative"
                 placeholder="Enter address"
               />
@@ -110,7 +128,9 @@
             <div class="form-group focused">
               <label class="form-control-label" for="input-city"> City</label>
               <input
+                [disabled]="!edit"
                 id="Input_city"
+                [(ngModel)]="city"
                 type="text"
                 class="form-control form-control-alternative"
                 placeholder="Enter city"
@@ -119,10 +139,12 @@
           </div>
           <div class="col-lg-4">
             <div class="form-group focused">
-              <label class="form-control-label" for="input-city"> City</label>
+              <label class="form-control-label" for="input-city"> State</label>
               <input
+                [disabled]="!edit"
                 type="text"
                 id="Input_state"
+                [(ngModel)]="state"
                 class="form-control form-control-alternative"
                 placeholder="Enter State"
               />
@@ -134,8 +156,10 @@
                 Country</label
               >
               <input
+                [disabled]="!edit"
                 type="text"
                 id="Input_country"
+                [(ngModel)]="country"
                 class="form-control form-control-alternative"
                 placeholder="Enter Country"
               />
@@ -147,8 +171,10 @@
                 Pin code</label
               >
               <input
+                [disabled]="!edit"
                 type="number"
                 id="Input_pincode"
+                [(ngModel)]="pincode"
                 class="form-control form-control-alternative"
                 placeholder="Enter Pincode"
               />
