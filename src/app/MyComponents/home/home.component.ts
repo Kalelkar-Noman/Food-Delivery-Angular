@@ -12,7 +12,10 @@ import { Router } from '@angular/router';
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  constructor(private supabaseService: SupabaseService,private router: Router) {
+  constructor(
+    private supabaseService: SupabaseService,
+    private router: Router
+  ) {
     // this.supabaseService.setData(this.UniqueCategoryIconList);
   }
   Itemsdata: any[] = []; //all Items data storing
@@ -112,8 +115,27 @@ export class HomeComponent {
   }
   // for product details
   navigateToDetails(itemId: string) {
-    console.log("clicked");
-    
+    console.log('clicked');
+
     this.router.navigate(['ProductDetails', itemId]);
+  }
+  async selectedCategoryLoad(i: Number = -1, item: string = 'all') {
+    const categorys = document.querySelectorAll('.inner-con');
+    localStorage.setItem('catid', `Inner_Menu${i}`);
+    categorys.forEach((cat) => {
+      cat.classList.remove('inner-con-active');
+    });
+    document
+      .getElementById(`Inner_Menu${i}`)
+      ?.classList.add('inner-con-active');
+    try {
+      const { data: ItemsRegistry } = await this.supabaseService.supabase
+        .from('ItemsRegistry')
+        .select('*')
+        .eq('item_category', item);
+      this.Itemsdata = ItemsRegistry;
+    } catch (error) {
+      console.error('Error fetching items:', error); // Handle errors gracefully
+    }
   }
 }

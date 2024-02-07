@@ -16,14 +16,23 @@
   <div class="carousel-items">
     <!-- category items -->
     <span>
-      <button id="Inner_Menu" runat="server" class="inner-con inner-con-active">
+      <button
+        id="Inner_Menu-1"
+        (click)="selectedCategoryLoad(-1, 'all')"
+        runat="server"
+        class="inner-con inner-con-active"
+      >
         <div class="menu-scroller"><span class="category_icon">All</span></div>
         <p class="mybtn">All</p>
       </button>
     </span>
 
     <span *ngFor="let item of UniqueCategoryIconList; index as i">
-      <button id="Inner_Menu" class="inner-con">
+      <button
+        [id]="'Inner_Menu' + i"
+        (click)="selectedCategoryLoad(i, item)"
+        class="inner-con"
+      >
         <div class="menu-scroller">
           <span class="category_icon">{{ categoryIcon(item) }}</span>
         </div>
@@ -37,7 +46,11 @@
   <!-- products items-->
   <div *ngFor="let product of Itemsdata; index as i" class="product-card">
     <div class="badge">Hot</div>
-    <a (click)="navigateToDetails(product.item_id)" class="product-tumb" id="Link_to_Details">
+    <a
+      (click)="navigateToDetails(product.item_id)"
+      class="product-tumb"
+      id="Link_to_Details"
+    >
       <img loading="lazy" [src]="product.item_image" alt="text" />
     </a>
     <div class="product-details">
