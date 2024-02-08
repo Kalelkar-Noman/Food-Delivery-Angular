@@ -119,7 +119,7 @@ export class HomeComponent {
 
     this.router.navigate(['ProductDetails', itemId]);
   }
-  async selectedCategoryLoad(i: Number = -1, item: string = 'all') {
+  async selectedCategoryLoad(i: Number = -1, item: string = '*') {
     const categorys = document.querySelectorAll('.inner-con');
     localStorage.setItem('catid', `Inner_Menu${i}`);
     categorys.forEach((cat) => {
@@ -129,11 +129,18 @@ export class HomeComponent {
       .getElementById(`Inner_Menu${i}`)
       ?.classList.add('inner-con-active');
     try {
-      const { data: ItemsRegistry } = await this.supabaseService.supabase
-        .from('ItemsRegistry')
-        .select('*')
-        .eq('item_category', item);
-      this.Itemsdata = ItemsRegistry;
+      if (item == '*') {
+        const { data: ItemsRegistry } = await this.supabaseService.supabase
+          .from('ItemsRegistry')
+          .select('*');
+        this.Itemsdata = ItemsRegistry;
+      } else {
+        const { data: ItemsRegistry } = await this.supabaseService.supabase
+          .from('ItemsRegistry')
+          .select('*')
+          .eq('item_category', item);
+        this.Itemsdata = ItemsRegistry;
+      }
     } catch (error) {
       console.error('Error fetching items:', error); // Handle errors gracefully
     }
