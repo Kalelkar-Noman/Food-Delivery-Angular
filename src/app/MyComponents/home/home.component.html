@@ -64,7 +64,7 @@
           <small>$96.00</small>{{ product.item_price }}
         </div>
         <div class="product-links">
-          <a href="#" class="for-asp-access"
+          <a (click)="addToCart(product)" href="#" class="for-asp-access"
             ><i class="ri-shopping-cart-fill"></i
           ></a>
         </div>
@@ -92,19 +92,34 @@
 <div id="mySidepanel" class="sidepanel headergap">
   <a href="#" class="closebtn" (click)="cartClose()" id="cart-close">×</a>
   <!-- <p>This is the side panel content.</p> -->
-  <!-- <%--<div class="cart-item">
-      <h3>Product Name</h3>
+  <span *ngIf="myCartArrayOfObjects.length > 0; else elseBlock">
+    <h4 *ngIf="true">Log in to order</h4>
+    <div *ngFor="let elem of myCartArrayOfObjects" class="cart-item">
+      <h3>{{ elem.name }}</h3>
       <div class="cart-side-panel">
-          <img src="/img/pizza.png" alt="Product Image" />
-          <div class="sidepanel-quantity-price">
-              <p class="price">$19.99</p>
-              <div class="quantity">
-                  <button class="minus-btn panel-btn">-</button>
-                  <input class="panel-btn" type="number" value="1" min="1" />
-                  <button class="plus-btn panel-btn">+</button>
-              </div>
+        <img [src]="elem.img" loading="lazy" alt="Product Image" />
+        <div class="sidepanel-quantity-price">
+          <p class="price" >${{ elem.price }}</p>
+          <div class="quantity">
+            <button (click)="minusbtn(elem.id)" class="minus-btn panel-btn">
+              -
+            </button>
+            <input
+              class="panel-btn"
+              type="number"
+              [value]="elem.quantity"
+              min="1"
+            />
+            <button (click)="plusbtn(elem.id)" class="plus-btn panel-btn">
+              +
+            </button>
           </div>
+        </div>
       </div>
-  </div>--%> -->
+    </div>
+  </span>
+  <ng-template class="cart-item" #elseBlock
+    ><h3>No item in Cart</h3></ng-template
+  >
   <!--  -->
 </div>

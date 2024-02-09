@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SupabaseService } from '../../supabase.service';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule, NgFor],
+  imports: [FormsModule, NgFor, NgIf],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -25,6 +25,10 @@ export class HomeComponent {
   async ngAfterViewInit() {
     this.carouselItems = document.querySelector('.carousel-items');
     await this.ItemsDataFetcher();
+    let localItem = localStorage.getItem('myCartData');
+    if (localItem != null) {
+      this.myCartArrayOfObjects = JSON.parse(localItem);
+    }
     // console.log(this.UniqueCategoryIconList);
   }
 
@@ -143,6 +147,81 @@ export class HomeComponent {
       }
     } catch (error) {
       console.error('Error fetching items:', error); // Handle errors gracefully
+    }
+  }
+  // cart
+
+  myCartArrayOfObjects: any[] = [];
+  addToCart(product: any) {
+    // console.log(this.myCartArrayOfObjects);
+    let mycartobj = {
+      id: product.item_id,
+      name: product.item_name,
+      img: product.item_image,
+      oldprice: product.item_price,
+      price: product.item_price,
+      quantity: 1,
+    };
+    let isDuplicate = false;
+    if (this.myCartArrayOfObjects.length > 0) {
+      isDuplicate = this.myCartArrayOfObjects.some(
+        (obj) => obj.id == mycartobj.id
+      );
+      if (!isDuplicate) {
+        this.myCartArrayOfObjects = [...this.myCartArrayOfObjects, mycartobj];
+        // console.log(this.myCartArrayOfObjects);
+        localStorage.setItem(
+          'myCartData',
+          JSON.stringify(this.myCartArrayOfObjects)
+        );
+        document.getElementById('mySidepanel')?.classList.add('active');
+      }
+    } else {
+      this.myCartArrayOfObjects.push(mycartobj);
+      // console.log(this.myCartArrayOfObjects);
+      localStorage.setItem(
+        'myCartData',
+        JSON.stringify(this.myCartArrayOfObjects)
+      );
+      document.getElementById('mySidepanel')?.classList.add('active');
+    }
+  }
+  minusbtn(id: any) {
+    for (let i = 0; i < this.myCartArrayOfObjects.length; i++) {
+      if (this.myCartArrayOfObjects[i].id === id) {
+        this.myCartArrayOfObjects[i].quantity -= 1;
+
+        if (this.myCartArrayOfObjects[i].quantity <= 0) {
+          // Update price and display
+          this.myCartArrayOfObjects.splice(i, 1);
+        }
+        this.myCartArrayOfObjects[i].price =
+          parseInt(this.myCartArrayOfObjects[i].oldprice) *
+          parseInt(this.myCartArrayOfObjects[i].quantity);
+        // Save updated cart data to localStorage
+        localStorage.setItem(
+          'myCartData',
+          JSON.stringify(this.myCartArrayOfObjects)
+        );
+        break; // Exit the loop after finding and processing the item
+      }
+    }
+  }
+  plusbtn(id: any) {
+    for (let i = 0; i < this.myCartArrayOfObjects.length; i++) {
+      if (this.myCartArrayOfObjects[i].id == id) {
+        this.myCartArrayOfObjects[i].quantity =
+          parseInt(this.myCartArrayOfObjects[i].quantity) + 1;
+        this.myCartArrayOfObjects[i].price =
+          parseInt(this.myCartArrayOfObjects[i].oldprice) *
+          parseInt(this.myCartArrayOfObjects[i].quantity);
+
+        localStorage.setItem(
+          'myCartData',
+          JSON.stringify(this.myCartArrayOfObjects)
+        );
+        break;
+      }
     }
   }
 }

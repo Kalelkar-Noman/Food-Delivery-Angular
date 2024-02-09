@@ -70,24 +70,27 @@
   <!-- <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager> -->
   <!-- <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional"> -->
   <!-- <ContentTemplate> -->
-  <section action="#" class="search__form">
-    <!-- <%--<i class="ri-search-line search__icon"></i>--%> -->
-    <button
-      class="ri-search-line search__icon"
-      ID="Search_Btn"
-      Text="&#xF0D1;"
-      (click)="onSearchKeyclick()"
-    ></button>
-    <!-- <%--<input type="search" placeholder="What are you looking for?" class="search__input">--%> -->
-    <input
-      type="text"
-      id="Search_text"
-      placeholder="Search your desired food name"
-      [(ngModel)]="searchItemName"
-      class="search__input"
-      (keydown)="onSearchKeyDown($event)"
-    />
-  </section>
+  <form (submit)="onSearchSubmit()">
+    <section action="#" class="search__form">
+      <!-- <%--<i class="ri-search-line search__icon"></i>--%> -->
+      <button
+        class="ri-search-line search__icon"
+        ID="Search_Btn"
+        Text="&#xF0D1;"
+        (click)="onSearchSubmit()"
+      ></button>
+      <!-- <%--<input type="search" placeholder="What are you looking for?" class="search__input">--%> -->
+      <input
+        required="true"
+        type="text"
+        id="Search_text"
+        placeholder="Search your desired food name"
+        [(ngModel)]="searchItemName"
+        name="searchItemName"
+        class="search__input"
+      />
+    </section>
+  </form>
   <div class="search_result_container">
     <!-- <asp:Repeater ID="Search_Repeater" runat="server"> -->
     <!-- <ItemTemplate> -->
@@ -95,7 +98,11 @@
       *ngFor="let items of SearchItems; index as i"
       class="search_result_items"
     >
-      <a id="Search_results" class="search_result_items">
+      <a
+        (click)="navigateToDetails(items.item_id)"
+        id="Search_results"
+        class="search_result_items"
+      >
         <!-- <%--<a href="#">--%> -->
         <img [src]="items.item_image" alt="img" />
         <p>{{ items.item_name }}</p>

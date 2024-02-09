@@ -40,9 +40,9 @@ export class AppComponent {
       // console.log(this.Userpid);
       if (this.Userpid.access == 'admin') {
         this.access = true;
-        this.isLoggedIn=true
-      }else{
-        this.isLoggedIn=true
+        this.isLoggedIn = true;
+      } else {
+        this.isLoggedIn = true;
       }
     } else {
       document.cookie =
@@ -80,35 +80,25 @@ export class AppComponent {
   // search
   SearchItems: any[] = [];
   searchItemName: string = '';
-  async onSearchKeyDown(event: KeyboardEvent) {
-    if (event.key === 'Enter') {
-      // Perform actions when Enter is pressed
-      console.log('enter clicked');
-      try {
-        let { data: ItemsSearch, error } = await this.supabaseService.supabase
-          .from('ItemsRegistry')
-          .select('*')
-          .ilike('item_name', `%${this.searchItemName}%`);
-        this.SearchItems = ItemsSearch;
-        console.log(this.searchItemName);
-        console.log(this.SearchItems);
-      } catch (error) {
-        console.error('Error fetching items:', error); // Handle errors gracefully
-      }
-    }
-  }
-  async onSearchKeyclick() {
+  async onSearchSubmit() {
+    // Perform search actions...
+    console.log('hello');
     try {
       let { data: ItemsSearch, error } = await this.supabaseService.supabase
         .from('ItemsRegistry')
         .select('*')
         .ilike('item_name', `%${this.searchItemName}%`);
       this.SearchItems = ItemsSearch;
-      console.log(this.searchItemName);
+
       console.log(this.SearchItems);
     } catch (error) {
       console.error('Error fetching items:', error); // Handle errors gracefully
     }
+  }
+  navigateToDetails(itemId: string) {
+    document.getElementById('search')?.classList.remove('show-search');
+    this.router.navigate(['ProductDetails', itemId]);
+   
   }
   // search controls
   searchOpen() {
