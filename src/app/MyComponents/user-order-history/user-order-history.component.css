@@ -1,5 +1,5 @@
 .order-history-container {
-  margin-top: 30vh;
+  margin-top: calc(var(--header-height) + 3rem);
 }
 .ml-auto {
   margin-left: auto;
