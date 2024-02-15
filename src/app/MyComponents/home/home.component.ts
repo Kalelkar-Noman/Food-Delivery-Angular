@@ -194,6 +194,11 @@ export class HomeComponent {
         if (this.myCartArrayOfObjects[i].quantity <= 0) {
           // Update price and display
           this.myCartArrayOfObjects.splice(i, 1);
+          localStorage.setItem(
+            'myCartData',
+            JSON.stringify(this.myCartArrayOfObjects)
+          );
+          break;
         }
         this.myCartArrayOfObjects[i].price =
           parseInt(this.myCartArrayOfObjects[i].oldprice) *
