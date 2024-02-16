@@ -2,6 +2,7 @@ import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SupabaseService } from '../../supabase.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -32,7 +33,10 @@ export class UserProfileComponent {
   editEnable() {
     this.edit = true;
   }
-  constructor(private supabaseService: SupabaseService) {
+  constructor(
+    private supabaseService: SupabaseService,
+    private router: Router
+  ) {
     // this.ItemsDataFetcher();
   }
   getCookieValue(cookieName: string) {
@@ -66,5 +70,13 @@ export class UserProfileComponent {
     } else {
       location.replace('/');
     }
+  }
+  // Log Off
+  LogOut() {
+    document.cookie = `Id=null;path=/`;
+    this.supabaseService.setAccess(false);
+    this.supabaseService.setUserDetails([]);
+    this.supabaseService.setUserLoggedInStatus(false);
+    this.router.navigate(['/']);
   }
 }

@@ -252,13 +252,17 @@ textarea {
   overflow: auto;
   resize: vertical;
 }
-.eyediv{
+.eyediv {
   position: relative;
 }
-.eye{
+.eye {
   position: absolute;
   right: 3%;
   top: 50%;
   font-size: 1.2rem;
   cursor: pointer;
+}
+.logOutDiv {
+  display: flex;
+  align-items: center;
 }

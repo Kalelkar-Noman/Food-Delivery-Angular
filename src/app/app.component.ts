@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { SupabaseService } from './supabase.service';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
+  // to access particular Cookie
   getCookieValue(cookieName: string) {
     const cookies = document.cookie.split('; ');
     for (let i = 0; i < cookies.length; i++) {
@@ -28,7 +30,21 @@ export class AppComponent {
   constructor(
     private supabaseService: SupabaseService,
     private router: Router
-  ) {}
+  ) {
+    this.yourServiceSubscription = this.supabaseService.UserAccess.subscribe(
+      (data) => {
+        this.access = data;
+      }
+    );
+    this.yourServiceSubscription =
+      this.supabaseService.UserLoggedInStatus.subscribe((data) => {
+        this.isLoggedIn = data;
+      });
+    // console.log(this.yourServiceSubscription);
+  }
+  yourServiceSubscription: Subscription;
+
+  ngOnInit() {}
   async ngAfterViewInit() {
     if (this.userToken && this.userToken != 'null') {
       let { data: MyRegistry, error } = await this.supabaseService.supabase
@@ -39,10 +55,13 @@ export class AppComponent {
       this.Userpid = MyRegistry[0];
       // console.log(this.Userpid);
       if (this.Userpid.access == 'admin') {
-        this.access = true;
-        this.isLoggedIn = true;
+        this.supabaseService.setAccess(true);
+        this.supabaseService.setUserLoggedInStatus(true);
+        // this.access = true;
+        // this.isLoggedIn = true;
       } else {
-        this.isLoggedIn = true;
+        this.supabaseService.setUserLoggedInStatus(true);
+        // this.isLoggedIn = true;
       }
     } else {
       document.cookie =
@@ -98,7 +117,6 @@ export class AppComponent {
   navigateToDetails(itemId: string) {
     document.getElementById('search')?.classList.remove('show-search');
     this.router.navigate(['ProductDetails', itemId]);
-   
   }
   // search controls
   searchOpen() {
@@ -119,21 +137,33 @@ export class AppComponent {
   // Logger
   emailaddress = '';
   password = '';
+  LogInBtn = true;
   async logger() {
+    this.LogInBtn = false;
+
     try {
       let { data: MyRegistry, error } = await this.supabaseService.supabase
         .from('MyRegistry')
         .select('*')
         .eq('user_email', this.emailaddress);
-      if (MyRegistry && MyRegistry[0].user_password == this.password) {
+      if (
+        MyRegistry.length > 0 &&
+        MyRegistry[0].user_password == this.password
+      ) {
         document.cookie = `Id=${MyRegistry[0].id}; expires=Fri, 31 Dec 2060 23:59:59 GMT; path=/`;
         document.getElementById('login')?.classList.remove('show-login');
         this.isLoggedIn = true;
         if (MyRegistry[0].access == 'admin') {
-          this.access = true;
-          this.isLoggedIn = true;
+          // this.access = true;
+          // this.isLoggedIn = true;
+          this.supabaseService.setAccess(true);
+          this.supabaseService.setUserLoggedInStatus(true);
+          console.log(MyRegistry);
+          this.supabaseService.setUserDetails(MyRegistry);
+          console.log('after ', this.supabaseService.UserDetails);
         }
       }
+
       this.userToken = this.getCookieValue('Id');
       if (this.userToken == 'null') {
         alert('credentials not matched');
@@ -142,7 +172,8 @@ export class AppComponent {
         alert('credentials not matched');
       }
     } catch (error) {
-      console.log('error occured');
+      console.log('error occured', error);
     }
+    this.LogInBtn = true;
   }
 }

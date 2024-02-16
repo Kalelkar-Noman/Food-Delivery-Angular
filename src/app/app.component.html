@@ -50,8 +50,8 @@
       ></i>
 
       <!-- Login button -->
+      <!-- routerLink="MyProfile" -->
       <a
-        routerLink="MyProfile"
         class="ri-user-line nav__login"
         (click)="loginOpen()"
         id="login-btn"
@@ -173,8 +173,13 @@
       <!-- <a href="#" class="login__forgot">You forgot your password </a> -->
 
       <!-- <%--<button type="submit" class="login__button">Log In</button>--%> -->
-      <button (click)="logger()" class="login__button" id="Login_user">
-        Log In
+      <button
+        [disabled]="!LogInBtn"
+        (click)="logger()"
+        class="login__button"
+        id="Login_user"
+      >
+        {{ LogInBtn ? "Log In" : "Checking" }}
       </button>
     </div>
   </section>

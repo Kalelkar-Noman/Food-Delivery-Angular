@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from './environments/environment';
 import { createClient } from '@supabase/supabase-js';
-// import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -17,9 +17,21 @@ export class SupabaseService {
       console.log(error);
     }
   }
-  // private dataSource = new BehaviorSubject<any[]>([]);
-  // data$ = this.dataSource.asObservable();
-  // setData(data: any[]) {
-  //   this.dataSource.next(data);
-  // }
+  // UserManagement Code
+  private _UserAccess = new BehaviorSubject<boolean>(false);
+  UserAccess = this._UserAccess.asObservable();
+  setAccess(data: boolean) {
+    this._UserAccess.next(data);
+  }
+  private _UserLoggedInStatus = new BehaviorSubject<boolean>(false);
+  UserLoggedInStatus = this._UserLoggedInStatus.asObservable();
+  setUserLoggedInStatus(data: boolean) {
+    this._UserLoggedInStatus.next(data);
+  }
+  private _UserDetails = new BehaviorSubject<any[]>([]);
+  UserDetails = this._UserDetails.asObservable();
+  setUserDetails(data: any[]) {
+    this._UserDetails.next(data);
+  }
+  
 }
