@@ -8,7 +8,12 @@
           <p>Price: ₹ {{ price }}</p>
         </div>
         <div class="quantity-button" id="quantity-button">
-          <div id="add-div">Add</div>
+          <div id="add-div" *ngIf="!isAddClicked" (click)="addBtnClicked()">Add</div>
+          <div *ngIf="isAddClicked" class="quantity">
+            <button (click)="minusbtn(product[0].item_id)" class="minus-btn panel-btn">-</button>
+            <input type="number" disabled [value]="ProductQuantity">
+            <button (click)="plusbtn(product[0].item_id)" class="plus-btn panel-btn">+</button>
+          </div>
         </div>
         <div>
           <h2>Description:</h2>

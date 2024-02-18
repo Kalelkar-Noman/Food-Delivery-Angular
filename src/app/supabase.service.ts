@@ -33,5 +33,6 @@ export class SupabaseService {
   setUserDetails(data: any[]) {
     this._UserDetails.next(data);
   }
-  
+  // Cart Re-usable Code
+  // ..
 }
