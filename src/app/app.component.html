@@ -140,29 +140,35 @@
     <h2 class="login__title">Log In</h2>
 
     <div class="login__group">
-      <div>
-        <label for="Login_Email" class="login__label">Email</label>
-        <!-- <%--<input type="email" placeholder="Write your email" id="email" class="login__input">--%> -->
-        <input
-          type="email"
-          id="Login_Email"
-          [(ngModel)]="emailaddress"
-          placeholder="Write your email"
-          class="login__input"
-        />
-      </div>
+      <form>
+        <div>
+          <label for="Login_Email" class="login__label">Email</label>
+          <!-- <%--<input type="email" placeholder="Write your email" id="email" class="login__input">--%> -->
+          <input
+            type="email"
+            id="Login_Email"
+            type="email"
+            required="true"
+            [(ngModel)]="emailaddress"
+            name="emailaddress"
+            placeholder="Write your email"
+            class="login__input"
+          />
+        </div>
 
-      <div>
-        <label for="Login_password" class="login__label">Password</label>
-        <!-- <%--<input  type="password" placeholder="Enter your password" id="password" class="login__input">--%> -->
-        <input
-          type="password"
-          [(ngModel)]="password"
-          placeholder="Enter your password"
-          id="Login_password"
-          class="login__input"
-        />
-      </div>
+        <div>
+          <label for="Login_password" class="login__label">Password</label>
+          <!-- <%--<input  type="password" placeholder="Enter your password" id="password" class="login__input">--%> -->
+          <input
+            type="password"
+            [(ngModel)]="password"
+            name="password"
+            placeholder="Enter your password"
+            id="Login_password"
+            class="login__input"
+          />
+        </div>
+      </form>
     </div>
 
     <div>

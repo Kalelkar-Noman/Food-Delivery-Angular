@@ -138,42 +138,59 @@ export class AppComponent {
   emailaddress = '';
   password = '';
   LogInBtn = true;
-  async logger() {
-    this.LogInBtn = false;
-
-    try {
-      let { data: MyRegistry, error } = await this.supabaseService.supabase
-        .from('MyRegistry')
-        .select('*')
-        .eq('user_email', this.emailaddress);
-      if (
-        MyRegistry.length > 0 &&
-        MyRegistry[0].user_password == this.password
-      ) {
-        document.cookie = `Id=${MyRegistry[0].id}; expires=Fri, 31 Dec 2060 23:59:59 GMT; path=/`;
-        document.getElementById('login')?.classList.remove('show-login');
-        this.isLoggedIn = true;
-        if (MyRegistry[0].access == 'admin') {
-          // this.access = true;
-          // this.isLoggedIn = true;
-          this.supabaseService.setAccess(true);
-          this.supabaseService.setUserLoggedInStatus(true);
-          console.log(MyRegistry);
-          this.supabaseService.setUserDetails(MyRegistry);
-          console.log('after ', this.supabaseService.UserDetails);
+  RequiredValidate(): boolean {
+    if (this.emailaddress.length > 0 && this.password.length > 0) {
+      if (this.emailaddress) {
+        const gmailRegex = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+        if (gmailRegex.test(this.emailaddress)) {
+          return true;
+        } else {
+          alert('The email address is not valid');
         }
       }
-
-      this.userToken = this.getCookieValue('Id');
-      if (this.userToken == 'null') {
-        alert('credentials not matched');
-      }
-      if (error) {
-        alert('credentials not matched');
-      }
-    } catch (error) {
-      console.log('error occured', error);
+    } else {
+      alert('please fill both fields');
     }
-    this.LogInBtn = true;
+    return false;
+  }
+  async logger() {
+    if (this.RequiredValidate()) {
+      this.LogInBtn = false;
+
+      try {
+        let { data: MyRegistry, error } = await this.supabaseService.supabase
+          .from('MyRegistry')
+          .select('*')
+          .eq('user_email', this.emailaddress);
+        if (
+          MyRegistry.length > 0 &&
+          MyRegistry[0].user_password == this.password
+        ) {
+          document.cookie = `Id=${MyRegistry[0].id}; expires=Fri, 31 Dec 2060 23:59:59 GMT; path=/`;
+          document.getElementById('login')?.classList.remove('show-login');
+          this.isLoggedIn = true;
+          if (MyRegistry[0].access == 'admin') {
+            // this.access = true;
+            // this.isLoggedIn = true;
+            this.supabaseService.setAccess(true);
+            this.supabaseService.setUserLoggedInStatus(true);
+            console.log(MyRegistry);
+            this.supabaseService.setUserDetails(MyRegistry);
+            console.log('after ', this.supabaseService.UserDetails);
+          }
+        }
+
+        this.userToken = this.getCookieValue('Id');
+        if (this.userToken == 'null') {
+          alert('credentials not matched');
+        }
+        if (error) {
+          alert('credentials not matched');
+        }
+      } catch (error) {
+        console.log('error occured', error);
+      }
+      this.LogInBtn = true;
+    }
   }
 }

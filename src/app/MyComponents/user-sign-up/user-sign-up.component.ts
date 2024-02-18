@@ -21,6 +21,7 @@ export class UserSignUpComponent {
   country = '';
   pincode = '';
   UserenteredOtp = '';
+
   constructor(
     private supabaseService: SupabaseService,
     private router: Router
@@ -66,48 +67,71 @@ export class UserSignUpComponent {
       }
     }
   }
-  async OnSubmit() {
-    if (this.Otp == this.UserenteredOtp && this.Otp.length > 2) {
-      try {
-        const { data, error } = await this.supabaseService.supabase
-          .from('MyRegistry')
-          .insert([
-            {
-              user_name: this.name,
-              user_password: this.passwordtext,
-              user_email: this.emailaddress,
-              user_phonenumber: this.phoneNumber,
-              user_state: this.state,
-              user_country: this.country,
-              user_city: this.city,
-              user_pincode: this.pincode,
-            },
-          ])
-          .select();
-        if (error) {
-          alert('something went wrong looks please try again');
+  RequiredValidate(): boolean {
+    if (
+      this.emailaddress.length > 0 &&
+      this.passwordtext.length > 0 &&
+      this.name.length > 0 &&
+      this.UserenteredOtp.length > 0 &&
+      this.phoneNumber > 0
+    ) {
+      if (this.emailaddress) {
+        const gmailRegex = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+        if (gmailRegex.test(this.emailaddress)) {
+          return true;
         } else {
-          try {
-            let { data: MyRegistry, error } =
-              await this.supabaseService.supabase
-                .from('MyRegistry')
-                .select('*')
-                .eq('user_email', this.emailaddress);
-            document.cookie = `Id=${MyRegistry[0].id}; expires=Fri, 31 Dec 2060 23:59:59 GMT; path=/`;
-            if (MyRegistry && MyRegistry.length > 0) {
-              this.router.navigate(['/']);
-            }
-          } catch (error) {
-            console.log('error occured');
-          }
+          alert('The email address is not valid');
         }
-      } catch (error) {
-        alert(
-          'something went wrong looks please try again with different email'
-        );
       }
     } else {
-      alert('OTP is incorrect');
+      alert('please fill all fields');
+    }
+    return false;
+  }
+  async OnSubmit() {
+    if (this.RequiredValidate()) {
+      if (this.Otp == this.UserenteredOtp && this.Otp.length > 2) {
+        try {
+          const { data, error } = await this.supabaseService.supabase
+            .from('MyRegistry')
+            .insert([
+              {
+                user_name: this.name,
+                user_password: this.passwordtext,
+                user_email: this.emailaddress,
+                user_phonenumber: this.phoneNumber,
+                user_state: this.state,
+                user_country: this.country,
+                user_city: this.city,
+                user_pincode: this.pincode,
+              },
+            ])
+            .select();
+          if (error) {
+            alert('something went wrong looks please try again');
+          } else {
+            try {
+              let { data: MyRegistry, error } =
+                await this.supabaseService.supabase
+                  .from('MyRegistry')
+                  .select('*')
+                  .eq('user_email', this.emailaddress);
+              document.cookie = `Id=${MyRegistry[0].id}; expires=Fri, 31 Dec 2060 23:59:59 GMT; path=/`;
+              if (MyRegistry && MyRegistry.length > 0) {
+                this.router.navigate(['/']);
+              }
+            } catch (error) {
+              console.log('error occured');
+            }
+          }
+        } catch (error) {
+          alert(
+            'something went wrong looks please try again with different email'
+          );
+        }
+      } else {
+        alert('OTP is incorrect');
+      }
     }
   }
 }
