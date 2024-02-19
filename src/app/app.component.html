@@ -36,7 +36,7 @@
       </ul>
 
       <!-- Close button -->
-      <div class="nav__close" (click)="navClose()" id="nav-close">
+      <div class="nav__close" (click)="navOpenClose()" id="nav-close">
         <i class="ri-close-line"></i>
       </div>
     </div>
@@ -45,12 +45,11 @@
       <!-- Search button -->
       <i
         class="ri-search-line nav__search"
-        (click)="searchOpen()"
+        (click)="searchOpenClose()"
         id="search-btn"
       ></i>
 
       <!-- Login button -->
-      <!-- routerLink="MyProfile" -->
       <a
         class="ri-user-line nav__login"
         (click)="loginOpen()"
@@ -58,7 +57,7 @@
       ></a>
 
       <!-- Toggle button -->
-      <div class="nav__toggle" (click)="navOpen()" id="nav-toggle">
+      <div class="nav__toggle" (click)="navOpenClose()" id="nav-toggle">
         <i class="ri-menu-line"></i>
       </div>
     </div>
@@ -130,7 +129,7 @@
     </asp:UpdatePanel> -->
   <i
     class="ri-close-line search__close"
-    (click)="searchClose()"
+    (click)="searchOpenClose()"
     id="search-close"
   ></i>
 </div>

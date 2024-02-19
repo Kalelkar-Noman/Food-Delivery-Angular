@@ -14,19 +14,10 @@ import { Subscription } from 'rxjs';
 })
 export class AppComponent {
   // to access particular Cookie
-  getCookieValue(cookieName: string) {
-    const cookies = document.cookie.split('; ');
-    for (let i = 0; i < cookies.length; i++) {
-      const [name, value] = cookies[i].split('=');
-      if (name === cookieName) {
-        return value;
-      }
-    }
-    return null; // Cookie not found
-  }
 
-  userToken = this.getCookieValue('Id');
+  userToken = this.supabaseService.getCookieValue('Id');
   Userpid: any;
+  yourServiceSubscription: Subscription;
   constructor(
     private supabaseService: SupabaseService,
     private router: Router
@@ -40,28 +31,25 @@ export class AppComponent {
       this.supabaseService.UserLoggedInStatus.subscribe((data) => {
         this.isLoggedIn = data;
       });
-    // console.log(this.yourServiceSubscription);
   }
-  yourServiceSubscription: Subscription;
 
-  ngOnInit() {}
   async ngAfterViewInit() {
     if (this.userToken && this.userToken != 'null') {
-      let { data: MyRegistry, error } = await this.supabaseService.supabase
-        .from('MyRegistry')
-        .select('*')
-        .eq('id', this.userToken);
-      // console.log(MyRegistry);
-      this.Userpid = MyRegistry[0];
-      // console.log(this.Userpid);
-      if (this.Userpid.access == 'admin') {
-        this.supabaseService.setAccess(true);
-        this.supabaseService.setUserLoggedInStatus(true);
-        // this.access = true;
-        // this.isLoggedIn = true;
-      } else {
-        this.supabaseService.setUserLoggedInStatus(true);
-        // this.isLoggedIn = true;
+      try {
+        let { data: MyRegistry, error } = await this.supabaseService.supabase
+          .from('MyRegistry')
+          .select('*')
+          .eq('id', this.userToken);
+        this.Userpid = MyRegistry[0];
+        if (this.Userpid.access == 'admin') {
+          this.supabaseService.setAccess(true);
+          this.supabaseService.setUserLoggedInStatus(true);
+        } else {
+          this.supabaseService.setUserLoggedInStatus(true);
+        }
+        this.supabaseService.setUserDetails(MyRegistry);
+      } catch (error) {
+        console.log(error);
       }
     } else {
       document.cookie =
@@ -72,21 +60,16 @@ export class AppComponent {
   access = false;
   isLoggedIn = false;
   // nav controls
-  navOpen() {
-    document.getElementById('nav-menu')?.classList.add('show-menu');
+  navOpenClose() {
+    document.getElementById('nav-menu')?.classList.toggle('show-menu');
   }
-  navClose() {
-    document.getElementById('nav-menu')?.classList.remove('show-menu');
-  }
-
   // login control
   loginClose() {
     document.getElementById('login')?.classList.remove('show-login');
   }
   loginOpen() {
-    this.userToken = this.getCookieValue('Id');
+    this.userToken = this.supabaseService.getCookieValue('Id');
     if (this.userToken && this.userToken != 'null') {
-      // location.replace('/MYProfile');
       this.router.navigate(['MYProfile']);
     } else {
       document.getElementById('login')?.classList.add('show-login');
@@ -100,18 +83,15 @@ export class AppComponent {
   SearchItems: any[] = [];
   searchItemName: string = '';
   async onSearchSubmit() {
-    // Perform search actions...
-    console.log('hello');
+    // Perform search actions
     try {
       let { data: ItemsSearch, error } = await this.supabaseService.supabase
         .from('ItemsRegistry')
         .select('*')
         .ilike('item_name', `%${this.searchItemName}%`);
       this.SearchItems = ItemsSearch;
-
-      console.log(this.SearchItems);
     } catch (error) {
-      console.error('Error fetching items:', error); // Handle errors gracefully
+      console.error('Error fetching items:', error);
     }
   }
   navigateToDetails(itemId: string) {
@@ -119,27 +99,17 @@ export class AppComponent {
     this.router.navigate(['ProductDetails', itemId]);
   }
   // search controls
-  searchOpen() {
-    document.getElementById('search')?.classList.add('show-search');
+  searchOpenClose() {
+    document.getElementById('search')?.classList.toggle('show-search');
   }
-  searchClose() {
-    document.getElementById('search')?.classList.remove('show-search');
-  }
-  // search results
-  searchData = [
-    {
-      imageaddress:
-        'https://images.pexels.com/photos/13990979/pexels-photo-13990979.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      name: 'rohan',
-      price: 800,
-    },
-  ];
+
   // Logger
-  emailaddress = '';
-  password = '';
+  emailaddress: string = '';
+  password: string = '';
   LogInBtn = true;
+  // Custom Validation
   RequiredValidate(): boolean {
-    if (this.emailaddress.length > 0 && this.password.length > 0) {
+    if (this.emailaddress.trim() != '' && this.password.trim() != '') {
       if (this.emailaddress) {
         const gmailRegex = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
         if (gmailRegex.test(this.emailaddress)) {
@@ -170,17 +140,13 @@ export class AppComponent {
           document.getElementById('login')?.classList.remove('show-login');
           this.isLoggedIn = true;
           if (MyRegistry[0].access == 'admin') {
-            // this.access = true;
-            // this.isLoggedIn = true;
             this.supabaseService.setAccess(true);
             this.supabaseService.setUserLoggedInStatus(true);
-            console.log(MyRegistry);
-            this.supabaseService.setUserDetails(MyRegistry);
-            console.log('after ', this.supabaseService.UserDetails);
           }
+          this.supabaseService.setUserDetails(MyRegistry);
         }
 
-        this.userToken = this.getCookieValue('Id');
+        this.userToken = this.supabaseService.getCookieValue('Id');
         if (this.userToken == 'null') {
           alert('credentials not matched');
         }

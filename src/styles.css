@@ -362,6 +362,7 @@ img {
 .login__forgot,
 .login__signup a {
   color: var(--first-color);
+  cursor: pointer;
 }
 .login__input::-webkit-input-placeholder {
   color: var(--text-color);
@@ -558,6 +559,7 @@ footer hr {
   }
 }
 .footer_logo {
+  margin-top: 1rem;
   display: flex;
   -webkit-box-align: center;
   -ms-flex-align: center;

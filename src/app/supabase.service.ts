@@ -17,6 +17,7 @@ export class SupabaseService {
       console.log(error);
     }
   }
+  // Reusable Code
   // UserManagement Code
   private _UserAccess = new BehaviorSubject<boolean>(false);
   UserAccess = this._UserAccess.asObservable();
@@ -33,6 +34,14 @@ export class SupabaseService {
   setUserDetails(data: any[]) {
     this._UserDetails.next(data);
   }
-  // Cart Re-usable Code
-  // ..
+  getCookieValue(cookieName: string) {
+    const cookies = document.cookie.split('; ');
+    for (let i = 0; i < cookies.length; i++) {
+      const [name, value] = cookies[i].split('=');
+      if (name === cookieName) {
+        return value;
+      }
+    }
+    return null; // Cookie not found
+  }
 }

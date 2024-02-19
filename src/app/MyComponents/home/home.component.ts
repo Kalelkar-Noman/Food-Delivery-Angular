@@ -29,7 +29,7 @@ export class HomeComponent {
     if (localItem != null) {
       this.myCartArrayOfObjects = JSON.parse(localItem);
     }
-    // console.log(this.UniqueCategoryIconList);
+ ;
   }
 
   // data fetching and initialising
@@ -39,7 +39,7 @@ export class HomeComponent {
         .from('ItemsRegistry')
         .select('*');
       this.Itemsdata = ItemsRegistry;
-      // console.log(this.Itemsdata);
+
       this.UniqueCategoryIconList = [
         ...new Set(this.Itemsdata.map((element) => element.item_category)),
       ];
@@ -119,7 +119,6 @@ export class HomeComponent {
   }
   // for product details
   navigateToDetails(itemId: string) {
-    console.log('clicked');
 
     this.router.navigate(['ProductDetails', itemId]);
   }
@@ -153,7 +152,7 @@ export class HomeComponent {
 
   myCartArrayOfObjects: any[] = [];
   addToCart(product: any) {
-    // console.log(this.myCartArrayOfObjects);
+
     let mycartobj = {
       id: product.item_id,
       name: product.item_name,
@@ -169,7 +168,7 @@ export class HomeComponent {
       );
       if (!isDuplicate) {
         this.myCartArrayOfObjects = [...this.myCartArrayOfObjects, mycartobj];
-        // console.log(this.myCartArrayOfObjects);
+
         localStorage.setItem(
           'myCartData',
           JSON.stringify(this.myCartArrayOfObjects)
@@ -178,7 +177,7 @@ export class HomeComponent {
       }
     } else {
       this.myCartArrayOfObjects.push(mycartobj);
-      // console.log(this.myCartArrayOfObjects);
+
       localStorage.setItem(
         'myCartData',
         JSON.stringify(this.myCartArrayOfObjects)

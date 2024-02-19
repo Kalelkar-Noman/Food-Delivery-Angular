@@ -31,20 +31,11 @@ export class AdministrationComponent {
   ) {
     this.ItemsDataFetcher();
   }
-  getCookieValue(cookieName: string) {
-    const cookies = document.cookie.split('; ');
-    for (let i = 0; i < cookies.length; i++) {
-      const [name, value] = cookies[i].split('=');
-      if (name === cookieName) {
-        return value;
-      }
-    }
-    return null; // Cookie not found
-  }
-  userToken = this.getCookieValue('Id');
+
+  userToken = this.supabaseService.getCookieValue('Id');
   async ngOnInit() {
     // let MyRegistry: any[] = [];
-    this.userToken = this.getCookieValue('Id');
+    this.userToken = this.supabaseService.getCookieValue('Id');
     if (this.userToken && this.userToken != 'null') {
       let { data: MyRegistry, error } = await this.supabaseService.supabase
         .from('MyRegistry')
@@ -175,7 +166,7 @@ export class AdministrationComponent {
           alert('no data found');
         }
         this.searchData = data;
-        console.log(this.searchData);
+
       }
     } catch (error) {
       console.log(error);

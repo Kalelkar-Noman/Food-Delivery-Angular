@@ -12,13 +12,13 @@ import { SupabaseService } from '../../supabase.service';
 })
 export class UserSignUpComponent {
   phoneNumber: number = 0;
-  emailaddress = '';
-  name = '';
-  passwordtext = '';
-  address = '';
-  city = '';
-  state = '';
-  country = '';
+  emailaddress: string = '';
+  name: string = '';
+  passwordtext: string = '';
+  address: string = '';
+  city: string = '';
+  state: string = '';
+  country: string = '';
   pincode = '';
   UserenteredOtp = '';
 
@@ -26,6 +26,7 @@ export class UserSignUpComponent {
     private supabaseService: SupabaseService,
     private router: Router
   ) {}
+  // OTP generation
   Otp = '';
   GenerateOtp() {
     let otp = '';
@@ -38,30 +39,19 @@ export class UserSignUpComponent {
         this.Otp
     );
   }
-  getCookieValue(cookieName: string) {
-    const cookies = document.cookie.split('; ');
-    for (let i = 0; i < cookies.length; i++) {
-      const [name, value] = cookies[i].split('=');
-      if (name === cookieName) {
-        return value;
-      }
-    }
-    return null; // Cookie not found
-  }
-  userToken = this.getCookieValue('Id');
+
+  userToken: any = '';
   async ngOnInit() {
-    // let MyRegistry: any[] = [];
-    this.userToken = this.getCookieValue('Id');
+    this.userToken = this.supabaseService.getCookieValue('Id');
     if (this.userToken && this.userToken != 'null') {
       let { data: MyRegistry, error } = await this.supabaseService.supabase
         .from('MyRegistry')
         .select('*')
         .eq('id', this.userToken);
-      console.log(MyRegistry);
+
       if (error) {
         console.log(error);
       }
-
       if (MyRegistry && MyRegistry.length > 0) {
         this.router.navigate(['/']);
       }
@@ -117,6 +107,8 @@ export class UserSignUpComponent {
                   .select('*')
                   .eq('user_email', this.emailaddress);
               document.cookie = `Id=${MyRegistry[0].id}; expires=Fri, 31 Dec 2060 23:59:59 GMT; path=/`;
+              this.supabaseService.setUserLoggedInStatus(true);
+
               if (MyRegistry && MyRegistry.length > 0) {
                 this.router.navigate(['/']);
               }

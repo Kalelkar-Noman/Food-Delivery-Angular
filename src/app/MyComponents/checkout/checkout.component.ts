@@ -17,16 +17,7 @@ export class CheckoutComponent {
   constructor(private supabaseService: SupabaseService) {
     // this.supabaseService.setData(this.UniqueCategoryIconList);
   }
-  getCookieValue(cookieName: string) {
-    const cookies = document.cookie.split('; ');
-    for (let i = 0; i < cookies.length; i++) {
-      const [name, value] = cookies[i].split('=');
-      if (name === cookieName) {
-        return value;
-      }
-    }
-    return null; // Cookie not found
-  }
+
   totalUpdate() {
     let localItem = localStorage.getItem('myCartData');
     let myCartArray = [];
@@ -38,9 +29,9 @@ export class CheckoutComponent {
       this.total_price = 0;
     }
   }
-  userToken = this.getCookieValue('Id');
+  userToken = this.supabaseService.getCookieValue('Id');
   async ngAfterViewInit() {
-    this.userToken = this.getCookieValue('Id');
+    this.userToken = this.supabaseService.getCookieValue('Id');
     try {
       let localItem = localStorage.getItem('myCartData');
       if (localItem != null) {
@@ -55,7 +46,7 @@ export class CheckoutComponent {
         .select('*')
         .eq('id', this.userToken);
 
-      console.log(MyRegistry);
+
       this.user_address = MyRegistry[0].user_address;
       this.user_name = MyRegistry[0].user_name;
       this.user_phonenumber = MyRegistry[0].user_phonenumber;
@@ -65,7 +56,7 @@ export class CheckoutComponent {
   }
   myCartArrayOfObjects: any[] = [];
   addToCart(product: any) {
-    // console.log(this.myCartArrayOfObjects);
+
     let mycartobj = {
       id: product.item_id,
       name: product.item_name,
@@ -81,7 +72,7 @@ export class CheckoutComponent {
       );
       if (!isDuplicate) {
         this.myCartArrayOfObjects = [...this.myCartArrayOfObjects, mycartobj];
-        // console.log(this.myCartArrayOfObjects);
+
         localStorage.setItem(
           'myCartData',
           JSON.stringify(this.myCartArrayOfObjects)
@@ -90,7 +81,7 @@ export class CheckoutComponent {
       }
     } else {
       this.myCartArrayOfObjects.push(mycartobj);
-      // console.log(this.myCartArrayOfObjects);
+
       localStorage.setItem(
         'myCartData',
         JSON.stringify(this.myCartArrayOfObjects)

@@ -36,13 +36,13 @@ export class ProductDetailComponent {
       for (let i = 0; i < this.myCartArrayOfObjects.length; i++) {
         if (this.myCartArrayOfObjects[i].id === this.itemId) {
           this.ProductQuantity = this.myCartArrayOfObjects[i].quantity;
-          if(this.ProductQuantity>0){
+          if (this.ProductQuantity > 0) {
             this.isAddClicked = true;
           }
         }
       }
     }
-    // console.log(this.UniqueCategoryIconList);
+
   }
 
   async dataFetcher() {
@@ -51,7 +51,6 @@ export class ProductDetailComponent {
         .from('ItemsRegistry')
         .select('*')
         .eq('item_id', this.itemId);
-      // console.log(ItemsRegistry);
 
       this.product = ItemsRegistry;
       this.image = ItemsRegistry[0].item_image;
@@ -72,7 +71,7 @@ export class ProductDetailComponent {
   }
   myCartArrayOfObjects: any[] = [];
   addToCart(product: any) {
-    // console.log(this.myCartArrayOfObjects);
+
     let mycartobj = {
       id: product[0].item_id,
       name: product[0].item_name,
@@ -88,21 +87,17 @@ export class ProductDetailComponent {
       );
       if (!isDuplicate) {
         this.myCartArrayOfObjects = [...this.myCartArrayOfObjects, mycartobj];
-        // console.log(this.myCartArrayOfObjects);
         localStorage.setItem(
           'myCartData',
           JSON.stringify(this.myCartArrayOfObjects)
         );
-        // document.getElementById('mySidepanel')?.classList.add('active');
       }
     } else {
       this.myCartArrayOfObjects.push(mycartobj);
-      // console.log(this.myCartArrayOfObjects);
       localStorage.setItem(
         'myCartData',
         JSON.stringify(this.myCartArrayOfObjects)
       );
-      // document.getElementById('mySidepanel')?.classList.add('active');
     }
   }
   minusbtn(id: any) {
