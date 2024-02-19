@@ -29,7 +29,6 @@ export class HomeComponent {
     if (localItem != null) {
       this.myCartArrayOfObjects = JSON.parse(localItem);
     }
- ;
   }
 
   // data fetching and initialising
@@ -111,15 +110,12 @@ export class HomeComponent {
     }
   }
   // for cart
-  cartClose() {
+  cartOpenClose() {
     document.getElementById('mySidepanel')?.classList.toggle('active');
   }
-  cartOpen() {
-    document.getElementById('mySidepanel')?.classList.toggle('active');
-  }
+
   // for product details
   navigateToDetails(itemId: string) {
-
     this.router.navigate(['ProductDetails', itemId]);
   }
   async selectedCategoryLoad(i: Number = -1, item: string = '*') {
@@ -151,8 +147,9 @@ export class HomeComponent {
   // cart
 
   myCartArrayOfObjects: any[] = [];
-  addToCart(product: any) {
-
+  addToCart(product: any, e: Event) {
+    e.stopPropagation();
+    e.preventDefault();
     let mycartobj = {
       id: product.item_id,
       name: product.item_name,

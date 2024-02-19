@@ -45,36 +45,37 @@
 <div class="product-cards">
   <!-- products items-->
   <div *ngFor="let product of Itemsdata; index as i" class="product-card">
-    <div class="badge">Hot</div>
-    <a
-      (click)="navigateToDetails(product.item_id)"
-      class="product-tumb"
-      id="Link_to_Details"
-    >
-      <img loading="lazy" [src]="product.item_image" alt="text" />
-    </a>
-    <div class="product-details">
-      <span class="product-catagory">{{ product.item_category }}</span>
-      <h4>
-        <a href="#">{{ product.item_name }}</a>
-      </h4>
-      <p>{{ product.item_description }}</p>
-      <div class="product-bottom-details">
-        <div class="product-price">
-          <small>$96.00</small>{{ product.item_price }}
-        </div>
-        <div class="product-links">
-          <a (click)="addToCart(product)" href="#" class="for-asp-access"
-            ><i class="ri-shopping-cart-fill"></i
-          ></a>
+    <a (click)="navigateToDetails(product.item_id)">
+      <div class="badge">Hot</div>
+      <span class="product-tumb" id="Link_to_Details">
+        <img loading="lazy" [src]="product.item_image" alt="text" />
+      </span>
+      <div class="product-details">
+        <span class="product-catagory">{{ product.item_category }}</span>
+        <h4>
+          <a href="#">{{ product.item_name }}</a>
+        </h4>
+        <p>{{ product.item_description }}</p>
+        <div class="product-bottom-details">
+          <div class="product-price">
+            <small>$96.00</small>{{ product.item_price }}
+          </div>
+          <div class="product-links">
+            <a
+              (click)="addToCart(product, $event)"
+              href="#"
+              class="for-asp-access"
+              ><i class="ri-shopping-cart-fill"></i
+            ></a>
+          </div>
         </div>
       </div>
-    </div>
+    </a>
   </div>
   <!-- products items end -->
 </div>
 
-<button class="open-button" (click)="cartOpen()" id="cart-button">
+<button class="open-button" (click)="cartOpenClose()" id="cart-button">
   <svg
     class="icon-cart"
     viewBox="0 0 24.38 30.52"
@@ -90,7 +91,7 @@
   </svg>
 </button>
 <div id="mySidepanel" class="sidepanel headergap">
-  <a href="#" class="closebtn" (click)="cartClose()" id="cart-close">×</a>
+  <a href="#" class="closebtn" (click)="cartOpenClose()" id="cart-close">×</a>
   <!-- <p>This is the side panel content.</p> -->
   <span *ngIf="myCartArrayOfObjects.length > 0; else elseBlock">
     <h4 *ngIf="true">Log in to order</h4>
@@ -99,7 +100,7 @@
       <div class="cart-side-panel">
         <img [src]="elem.img" loading="lazy" alt="Product Image" />
         <div class="sidepanel-quantity-price">
-          <p class="price" >${{ elem.price }}</p>
+          <p class="price">${{ elem.price }}</p>
           <div class="quantity">
             <button (click)="minusbtn(elem.id)" class="minus-btn panel-btn">
               -
