@@ -4,6 +4,7 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { SupabaseService } from './supabase.service';
 import { FormsModule } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { __values } from 'tslib';
 
 @Component({
   selector: 'app-root',
@@ -129,35 +130,12 @@ export class AppComponent {
     if (this.RequiredValidate()) {
       this.LogInBtn = false;
 
-      try {
-        let { data: MyRegistry, error } = await this.supabaseService.supabase
-          .from('MyRegistry')
-          .select('*')
-          .eq('user_email', this.emailaddress);
-        if (
-          MyRegistry.length > 0 &&
-          MyRegistry[0].user_password == this.password
-        ) {
-          document.cookie = `Id=${MyRegistry[0].id}; expires=Fri, 31 Dec 2060 23:59:59 GMT; path=/`;
-          document.getElementById('login')?.classList.remove('show-login');
-          this.isLoggedIn = true;
-          if (MyRegistry[0].access == 'admin') {
-            this.supabaseService.setAccess(true);
-            this.supabaseService.setUserLoggedInStatus(true);
-          }
-          this.supabaseService.setUserDetails(MyRegistry);
-        }
+      this.supabaseService
+        .logInUser(this.emailaddress, this.password)
+        .then((__values) => {
+          this.userToken = __values;
+        });
 
-        this.userToken = this.supabaseService.getCookieValue('Id');
-        if (this.userToken == 'null') {
-          alert('credentials not matched');
-        }
-        if (error) {
-          alert('credentials not matched');
-        }
-      } catch (error) {
-        console.log('error occured', error);
-      }
       this.LogInBtn = true;
     }
   }
