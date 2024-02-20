@@ -9,9 +9,6 @@
           }}</label>
         </h2>
       </div>
-      <!-- <%--
-      <div class="del_logout_btn"><button>Logout</button></div>
-      --%> -->
     </div>
     <!-- address -->
     <div class="delivery_page_ad del_shadows">
@@ -48,12 +45,6 @@
       </div>
     </div>
     <div class="del_items del_shadows">
-      <!-- <%--<button class="minus-btn panel-btn">-</button
-      ><input class="panel-btn" type="number" min="1" /><button
-        class="plus-btn panel-btn"
-      >
-        +</button
-      >--%> -->
       <span *ngIf="myCartArrayOfObjects.length > 0; else elseBlock">
         <div *ngFor="let elem of myCartArrayOfObjects" class="del-cart-item">
           <h3>{{ elem.name }}</h3>

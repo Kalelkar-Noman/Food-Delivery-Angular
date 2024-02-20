@@ -13,27 +13,35 @@ import { Subscription } from 'rxjs';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  // to access particular Cookie
-
+  title = 'Food-Delivery-Angular';
+  access = false;
+  isLoggedIn = false;
   userToken = this.supabaseService.getCookieValue('Id');
   Userpid: any;
-  yourServiceSubscription: Subscription;
+  SearchItems: any[] = [];
+  searchItemName: string = '';
+  emailaddress: string = '';
+  password: string = '';
+  LogInBtn = true;
+  yourAccessServiceSubscription: Subscription;
+  yourIsLoggedInServiceSubscription: Subscription;
+  // to access particular Cookie
+
   constructor(
     private supabaseService: SupabaseService,
     private router: Router
   ) {
-    this.yourServiceSubscription = this.supabaseService.UserAccess.subscribe(
-      (data) => {
+    this.yourAccessServiceSubscription =
+      this.supabaseService.UserAccess.subscribe((data) => {
         this.access = data;
-      }
-    );
-    this.yourServiceSubscription =
+      });
+    this.yourIsLoggedInServiceSubscription =
       this.supabaseService.UserLoggedInStatus.subscribe((data) => {
         this.isLoggedIn = data;
       });
   }
 
-  async ngAfterViewInit() {
+  async ngOnInit() {
     if (this.userToken && this.userToken != 'null') {
       try {
         let { data: MyRegistry, error } = await this.supabaseService.supabase
@@ -43,10 +51,9 @@ export class AppComponent {
         this.Userpid = MyRegistry[0];
         if (this.Userpid.access == 'admin') {
           this.supabaseService.setAccess(true);
-          this.supabaseService.setUserLoggedInStatus(true);
-        } else {
-          this.supabaseService.setUserLoggedInStatus(true);
         }
+        this.supabaseService.setUserLoggedInStatus(true);
+
         this.supabaseService.setUserDetails(MyRegistry);
       } catch (error) {
         console.log(error);
@@ -56,9 +63,7 @@ export class AppComponent {
         'Id=null; expires=Fri, 31 Dec 2060 23:59:59 GMT; path=/';
     }
   }
-  title = 'Food-Delivery-Angular';
-  access = false;
-  isLoggedIn = false;
+
   // nav controls
   navOpenClose() {
     document.getElementById('nav-menu')?.classList.toggle('show-menu');
@@ -80,8 +85,7 @@ export class AppComponent {
     this.router.navigate(['SignUp']);
   }
   // search
-  SearchItems: any[] = [];
-  searchItemName: string = '';
+
   async onSearchSubmit() {
     // Perform search actions
     try {
@@ -104,9 +108,7 @@ export class AppComponent {
   }
 
   // Logger
-  emailaddress: string = '';
-  password: string = '';
-  LogInBtn = true;
+
   // Custom Validation
   RequiredValidate(): boolean {
     if (this.emailaddress.trim() != '' && this.password.trim() != '') {

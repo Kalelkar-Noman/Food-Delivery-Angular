@@ -1,4 +1,3 @@
-<!-- <form (ngSubmit)="OnSubmit()"> -->
 <div class="signup_container headergap">
   <section class="signup_inner_container">
     <header>Registration Form</header>
@@ -62,44 +61,7 @@
           />
         </div>
       </div>
-      <!-- <div class="gender-box">
-          <h3>Gender</h3>
-          <div class="gender-option">
-            <div class="gender">
-              <asp:RadioButton
-                type="radio"
-                 id="Check_male"
-                GroupName="gender"
-                 
-              />
-  
-              <label for="ContentPlaceHolder1_Check_male">male</label>
-            </div>
-            <div class="gender">
-              <asp:RadioButton
-                 id="Check_female"
-                type="radio"
-                 
-                GroupName="gender"
-              />
-  
-              <label for="ContentPlaceHolder1_Check_female">Female</label>
-            </div>
-            <div class="gender">
-              <asp:RadioButton
-                 id="Check_other"
-                GroupName="gender"
-                Checked="true"
-                type="radio"
-                 
-              />
-  
-              <label for="ContentPlaceHolder1_Check_other"
-                >prefer not to say</label
-              >
-            </div>
-          </div>
-        </div> -->
+
       <div class="input-box address">
         <label>Address</label>
         <input
@@ -109,15 +71,7 @@
           placeholder="Enter street address"
         />
 
-        <!-- <input
-            id="Address_line2"
-            type="text"
-            placeholder="Enter street address line 2"
-             
-          /> -->
-
         <div class="column">
-          <!-- <label class="select-box" for="cars">Choose a car:</label> -->
           <input
             class="select-box"
             [(ngModel)]="country"
@@ -157,7 +111,6 @@
           />
         </div>
       </div>
-      <!-- (click)="OnSubmit()" -->
       <button
         class="submit_btn"
         (click)="OnSubmit()"
@@ -169,4 +122,3 @@
     </section>
   </section>
 </div>
-<!-- </form> -->

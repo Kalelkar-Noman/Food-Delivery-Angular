@@ -15,12 +15,18 @@ export class ProductDetailComponent {
   name = '';
   price = 0;
   description = '';
+  dataAvailable = false;
+  itemId = this.route.snapshot.params['itemId'];
+  product: any[] = [];
+  ProductQuantity = 1;
+  isAddClicked = false;
+  myCartArrayOfObjects: any[] = [];
+
   constructor(
     private supabaseService: SupabaseService,
     private route: ActivatedRoute
   ) {}
-  dataAvailable = false;
-  itemId = this.route.snapshot.params['itemId'];
+
   async ngOnInit() {
     this.itemId = this.route.snapshot.params['itemId'];
     if (this.itemId != null) {
@@ -42,7 +48,6 @@ export class ProductDetailComponent {
         }
       }
     }
-
   }
 
   async dataFetcher() {
@@ -62,16 +67,12 @@ export class ProductDetailComponent {
     }
   }
 
-  product: any[] = [];
-  ProductQuantity = 1;
-  isAddClicked = false;
   addBtnClicked() {
     this.isAddClicked = true;
     this.addToCart(this.product);
   }
-  myCartArrayOfObjects: any[] = [];
-  addToCart(product: any) {
 
+  addToCart(product: any) {
     let mycartobj = {
       id: product[0].item_id,
       name: product[0].item_name,

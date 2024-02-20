@@ -24,6 +24,9 @@ export class UserProfileComponent {
   pincode = '';
   edit = false;
   passVisibility: string = 'password';
+  userToken = this.supabaseService.getCookieValue('Id');
+  yourServiceSubscription: Subscription;
+
   togglePassVisibility() {
     if (this.passVisibility == 'text') {
       this.passVisibility = 'password';
@@ -57,8 +60,6 @@ export class UserProfileComponent {
     );
   }
 
-  userToken = this.supabaseService.getCookieValue('Id');
-  yourServiceSubscription: Subscription;
   async ngOnInit() {
     this.userToken = this.supabaseService.getCookieValue('Id');
     if (!this.userToken && this.userToken == 'null') {

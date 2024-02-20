@@ -12,14 +12,17 @@ import { Router } from '@angular/router';
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
+  Itemsdata: any[] = []; //all Items data storing
+  UniqueCategoryIconList: Array<string> = []; //for unique category
+  currentScrollLeft = 0;
+  prevButtonVisible = false;
+  carouselItems = document.querySelector('.carousel-items');
+  myCartArrayOfObjects: any[] = [];
+
   constructor(
     private supabaseService: SupabaseService,
     private router: Router
-  ) {
-    // this.supabaseService.setData(this.UniqueCategoryIconList);
-  }
-  Itemsdata: any[] = []; //all Items data storing
-  UniqueCategoryIconList: Array<string> = []; //for unique category
+  ) {}
 
   //after view initialised
   async ngAfterViewInit() {
@@ -64,9 +67,7 @@ export class HomeComponent {
     }
   }
   // carousel sliding
-  currentScrollLeft = 0;
-  prevButtonVisible = false;
-  carouselItems = document.querySelector('.carousel-items');
+
   // Handle next button click:
   carouselNextBtnClick() {
     // let innerCon = carouselItems?.querySelector('.inner-con');
@@ -146,7 +147,6 @@ export class HomeComponent {
   }
   // cart
 
-  myCartArrayOfObjects: any[] = [];
   addToCart(product: any, e: Event) {
     e.stopPropagation();
     e.preventDefault();

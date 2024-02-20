@@ -21,13 +21,14 @@ export class UserSignUpComponent {
   country: string = '';
   pincode = '';
   UserenteredOtp = '';
+  Otp = '';
 
   constructor(
     private supabaseService: SupabaseService,
     private router: Router
   ) {}
   // OTP generation
-  Otp = '';
+
   GenerateOtp() {
     let otp = '';
     for (let i = 0; i < 6; i++) {

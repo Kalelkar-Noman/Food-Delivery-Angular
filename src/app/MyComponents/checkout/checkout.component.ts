@@ -14,9 +14,9 @@ export class CheckoutComponent {
   user_phonenumber = 0;
   user_address = '';
   total_price = 0;
-  constructor(private supabaseService: SupabaseService) {
-    // this.supabaseService.setData(this.UniqueCategoryIconList);
-  }
+  userToken = this.supabaseService.getCookieValue('Id');
+  myCartArrayOfObjects: any[] = [];
+  constructor(private supabaseService: SupabaseService) {}
 
   totalUpdate() {
     let localItem = localStorage.getItem('myCartData');
@@ -29,7 +29,7 @@ export class CheckoutComponent {
       this.total_price = 0;
     }
   }
-  userToken = this.supabaseService.getCookieValue('Id');
+
   async ngAfterViewInit() {
     this.userToken = this.supabaseService.getCookieValue('Id');
     try {
@@ -46,7 +46,6 @@ export class CheckoutComponent {
         .select('*')
         .eq('id', this.userToken);
 
-
       this.user_address = MyRegistry[0].user_address;
       this.user_name = MyRegistry[0].user_name;
       this.user_phonenumber = MyRegistry[0].user_phonenumber;
@@ -54,9 +53,8 @@ export class CheckoutComponent {
       console.error('Error fetching items:', error); // Handle errors gracefully
     }
   }
-  myCartArrayOfObjects: any[] = [];
-  addToCart(product: any) {
 
+  addToCart(product: any) {
     let mycartobj = {
       id: product.item_id,
       name: product.item_name,

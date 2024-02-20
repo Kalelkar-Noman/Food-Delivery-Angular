@@ -22,6 +22,8 @@ export class AdministrationComponent {
   description: string = '';
   searchData: any[] = [];
   access = false;
+  userToken = this.supabaseService.getCookieValue('Id');
+
   onchange() {
     this.imagePreviews = this.imagePreviewsLink;
   }
@@ -32,7 +34,6 @@ export class AdministrationComponent {
     this.ItemsDataFetcher();
   }
 
-  userToken = this.supabaseService.getCookieValue('Id');
   async ngOnInit() {
     // let MyRegistry: any[] = [];
     this.userToken = this.supabaseService.getCookieValue('Id');
@@ -166,7 +167,6 @@ export class AdministrationComponent {
           alert('no data found');
         }
         this.searchData = data;
-
       }
     } catch (error) {
       console.log(error);
