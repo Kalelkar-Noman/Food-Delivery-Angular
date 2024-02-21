@@ -225,4 +225,9 @@ export class HomeComponent {
       }
     }
   }
+
+  // closed(){
+  //   document.getElementById('mySidepanel2')?.classList.toggle('active2');
+  // }
+
 }

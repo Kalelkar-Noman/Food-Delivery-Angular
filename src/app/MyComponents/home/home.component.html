@@ -53,7 +53,7 @@
       <div class="product-details">
         <span class="product-catagory">{{ product.item_category }}</span>
         <h4>
-          <a >{{ product.item_name }}</a>
+          <a>{{ product.item_name }}</a>
         </h4>
         <p>{{ product.item_description }}</p>
         <div class="product-bottom-details">
@@ -91,7 +91,9 @@
   </svg>
 </button>
 <div id="mySidepanel" class="sidepanel headergap">
-  <a href="#" class="closebtn" (click)="cartOpenClose()" id="cart-close">×</a>
+  <span href="#" class="closebtn" (click)="cartOpenClose()" id="cart-close"
+    >×</span
+  >
   <!-- <p>This is the side panel content.</p> -->
   <span *ngIf="myCartArrayOfObjects.length > 0; else elseBlock">
     <h4 *ngIf="true">Log in to order</h4>
