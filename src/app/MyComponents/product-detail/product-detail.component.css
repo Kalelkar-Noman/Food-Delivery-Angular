@@ -88,5 +88,6 @@
   text-align: center;
 }
 .product-info input[type="number"] {
-  background-color: #297f2d;
+  background-color: #4caf50;
+  color: white;
 }
