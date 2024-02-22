@@ -572,7 +572,8 @@ footer hr {
 /*  */
 
 .sidepanel {
-  height: 100vh;
+  /* height: 100vh; */
+  height: -webkit-fill-available;
   width: 300px;
   transition: all 0.5s ease-in-out;
   position: fixed;

@@ -170,7 +170,7 @@ export class HomeComponent {
           'myCartData',
           JSON.stringify(this.myCartArrayOfObjects)
         );
-        document.getElementById('mySidepanel')?.classList.add('active');
+        // document.getElementById('mySidepanel')?.classList.add('active');
       }
     } else {
       this.myCartArrayOfObjects.push(mycartobj);
@@ -179,8 +179,9 @@ export class HomeComponent {
         'myCartData',
         JSON.stringify(this.myCartArrayOfObjects)
       );
-      document.getElementById('mySidepanel')?.classList.add('active');
+      // document.getElementById('mySidepanel')?.classList.add('active');
     }
+    document.getElementById('mySidepanel')?.classList.toggle('active');
   }
   minusbtn(id: any) {
     for (let i = 0; i < this.myCartArrayOfObjects.length; i++) {
