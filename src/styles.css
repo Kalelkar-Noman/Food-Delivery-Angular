@@ -580,13 +580,13 @@ footer hr {
   top: 0;
   right: 0;
   bottom: 0;
+
   background-color: #f1f1f1;
   overflow-x: hidden;
   padding-top: 60px;
 }
 
 .sidepanel.active {
-  transform: translateX(100);
   left: 100%;
 }
 
