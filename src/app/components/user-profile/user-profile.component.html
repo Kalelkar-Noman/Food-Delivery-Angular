@@ -1,0 +1,191 @@
+<div class="profile_page_container">
+  <div class="card bg-secondary shadow">
+    <div class="card-header bg-white border-0">
+      <div class="row align-items-center">
+        <div class="col-8 logOutDiv">
+          <h3 class="mb-0">My account</h3>
+          <button (click)="LogOut()" class="btn btn-sm btn-primary">
+            Log Out
+          </button>
+        </div>
+        <div class="col-4 text-right">
+          <!-- <a href="#!" class="btn btn-sm btn-primary">Settings</a> -->
+          <button
+            class="btn btn-sm btn-primary"
+            id="Edit"
+            (click)="editEnable()"
+          >
+            Edit
+          </button>
+          <button class="btn btn-sm btn-primary" id="Save" *ngIf="edit">
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h6 class="heading-small text-muted mb-4">User information</h6>
+      <div class="pl-lg-4">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group focused">
+              <label class="form-control-label" for="input-username">
+                Phone Number</label
+              >
+
+              <input
+                [disabled]="!edit"
+                type="number"
+                required="true"
+                id="Input_number"
+                [(ngModel)]="phoneNumber"
+                class="form-control form-control-alternative"
+                placeholder="Enter phone Number"
+              />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label class="form-control-label" for="input-email">
+                Email address</label
+              >
+              <input
+                [disabled]="!edit"
+                required="true"
+                type="email"
+                id="Input_email"
+                [(ngModel)]="emailaddress"
+                class="form-control form-control-alternative"
+                placeholder="Enter email"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group focused">
+              <label class="form-control-label" for="input-first-name">
+                Your name</label
+              >
+              <input
+                [disabled]="!edit"
+                required="true"
+                type="text"
+                id="Input_name"
+                [(ngModel)]="name"
+                class="form-control form-control-alternative"
+                placeholder="Enter name"
+              />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group focused eyediv">
+              <label class="form-control-label" for="input-last-name">
+                Password</label
+              >
+              <input
+                [disabled]="!edit"
+                required="true"
+                [type]="passVisibility"
+                id="Input_password"
+                [(ngModel)]="passwordtext"
+                class="form-control form-control-alternative"
+                placeholder="Enter password"
+              />
+              <i
+                *ngIf="passVisibility == 'text'"
+                (click)="togglePassVisibility()"
+                class="ri-eye-line eye"
+              ></i>
+              <i
+                *ngIf="passVisibility == 'password'"
+                (click)="togglePassVisibility()"
+                class="ri-eye-off-line eye"
+              ></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="my-4" />
+      <!-- Address -->
+      <h6 class="heading-small text-muted mb-4">Contact information</h6>
+      <div class="pl-lg-4">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group focused">
+              <label class="form-control-label" for="input-address">
+                Address</label
+              >
+              <input
+                [disabled]="!edit"
+                id="Input_address"
+                [(ngModel)]="address"
+                class="form-control form-control-alternative"
+                placeholder="Enter address"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="form-group focused">
+              <label class="form-control-label" for="input-city"> City</label>
+              <input
+                [disabled]="!edit"
+                id="Input_city"
+                [(ngModel)]="city"
+                type="text"
+                class="form-control form-control-alternative"
+                placeholder="Enter city"
+              />
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group focused">
+              <label class="form-control-label" for="input-city"> State</label>
+              <input
+                [disabled]="!edit"
+                type="text"
+                id="Input_state"
+                [(ngModel)]="state"
+                class="form-control form-control-alternative"
+                placeholder="Enter State"
+              />
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group focused">
+              <label class="form-control-label" for="input-country">
+                Country</label
+              >
+              <input
+                [disabled]="!edit"
+                type="text"
+                id="Input_country"
+                [(ngModel)]="country"
+                class="form-control form-control-alternative"
+                placeholder="Enter Country"
+              />
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="form-group">
+              <label class="form-control-label" for="input-country">
+                Pin code</label
+              >
+              <input
+                [disabled]="!edit"
+                type="number"
+                id="Input_pincode"
+                [(ngModel)]="pincode"
+                class="form-control form-control-alternative"
+                placeholder="Enter Pincode"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr class="my-4" />
+    </div>
+  </div>
+</div>

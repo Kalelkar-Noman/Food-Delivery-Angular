@@ -1,0 +1,161 @@
+.form .column,
+.signup_container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+}
+.signup_container {
+  min-height: 100vh;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 20px;
+  background: #bbbab9;
+}
+.signup_inner_container {
+  max-width: 700px;
+  width: 100%;
+  background: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+.signup_inner_container header {
+  font-size: 1.5rem;
+  color: #333;
+  font-weight: 500;
+  text-align: center;
+}
+.signup_inner_container .form {
+  margin-top: 30px;
+}
+.form .input-box {
+  width: 100%;
+  margin-top: 20px;
+}
+.input-box label {
+  color: #333;
+}
+.form .input-box input,
+.form .select-box {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  outline: 0;
+  font-size: 1rem;
+  color: #707070;
+  margin-top: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0 15px;
+}
+.input-box input:focus {
+  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+.form .column {
+  display: flex;
+  -webkit-column-gap: 15px;
+  -moz-column-gap: 15px;
+  column-gap: 15px;
+}
+.form .gender-box {
+  margin-top: 20px;
+}
+.gender-box h3 {
+  color: #333;
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+.form .gender,
+.form .gender-option {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-column-gap: 50px;
+  -moz-column-gap: 50px;
+  column-gap: 50px;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+.form .gender {
+  -webkit-column-gap: 5px;
+  -moz-column-gap: 5px;
+  column-gap: 5px;
+}
+.gender input {
+  accent-color: rgb(130, 106, 251);
+}
+.form .gender input,
+.form .gender label {
+  cursor: pointer;
+}
+.gender label {
+  color: #707070;
+}
+.address .select-box,
+.address input {
+  margin-top: 15px;
+}
+.select-box select {
+  height: 100%;
+  width: 100%;
+  outline: 0;
+  border: none;
+  color: #707070;
+  font-size: 1rem;
+}
+.form .submit_btn,
+.form button,
+.otp-div #otp_btn {
+  height: 55px;
+  width: 100%;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 400;
+  border: none;
+  cursor: pointer;
+  background: #826afb;
+}
+.form .submit_btn,
+.form button {
+  margin-top: 30px;
+  -webkit-transition: 0.2s;
+  -o-transition: 0.2s;
+  transition: 0.2s;
+}
+.form button:hover,
+.otp-div #otp_btn:hover,
+.submit_btn:hover {
+  background: #5838fa;
+}
+@media screen and (max-width: 500px) {
+  .form .column {
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+  .form .gender,
+  .form .gender-option {
+    row-gap: 15px;
+  }
+}
+.otp-div {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 30% 15px auto;
+  grid-template-columns: 30% auto;
+  grid-gap: 15px;
+}
+.otp-div #otp_btn {
+  -webkit-transition: 0.2s;
+  -o-transition: 0.2s;
+  transition: 0.2s;
+}

@@ -1,0 +1,125 @@
+<div class="signup_container headergap">
+    <section class="signup_inner_container">
+      <header>Registration Form</header>
+      <section action="#" class="form">
+        <div class="input-box">
+          <label>Full Name</label>
+          <input
+            type="text"
+            placeholder="Enter full name"
+            [required]="true"
+            id="User_name"
+            [(ngModel)]="name"
+          />
+        </div>
+        <div class="input-box">
+          <label>Email Address</label>
+          <input
+            id="Email_input"
+            type="email"
+            required="true"
+            [(ngModel)]="emailaddress"
+            placeholder="Enter email address"
+          />
+        </div>
+        <div class="input-box otp-div">
+          <input
+            (click)="GenerateOtp()"
+            id="otp_btn"
+            type="button"
+            value="Get OTP"
+          />
+          <input
+            id="Otp_inputbox"
+            type="text"
+            placeholder="Enter OTP"
+            [(ngModel)]="UserenteredOtp"
+            required="true"
+          />
+        </div>
+        <div class="column">
+          <div class="input-box">
+            <label>Phone Number</label>
+            <input
+              id="Phone_number"
+              type="number"
+              [(ngModel)]="phoneNumber"
+              placeholder="Enter phone number"
+              required="true"
+            />
+          </div>
+          <div class="input-box">
+            <label>PassWord</label>
+            <!-- <%--pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"--%> -->
+            <input
+              id="User_pass"
+              type="password"
+              [(ngModel)]="passwordtext"
+              placeholder="Enter Your password"
+              minlength="8"
+              required="true"
+            />
+          </div>
+        </div>
+  
+        <div class="input-box address">
+          <label>Address</label>
+          <input
+            id="Address_line1"
+            type="text"
+            [(ngModel)]="address"
+            placeholder="Enter street address"
+          />
+  
+          <div class="column">
+            <input
+              class="select-box"
+              [(ngModel)]="country"
+              placeholder="Enter yout Country"
+              type="text"
+              list="countries"
+            />
+            <datalist id="countries">
+              <option Value="India">India</option>
+              <option Value="America">America</option>
+              <option Value="Japan">Japan</option>
+              <option Value="Russia">Russia</option>
+              <option Value="China">China</option>
+              <option Value="Brazil">Brazil</option>
+            </datalist>
+  
+            <input
+              id="City_input"
+              [(ngModel)]="city"
+              type="text"
+              placeholder="Enter your city"
+            />
+          </div>
+          <div class="column">
+            <input
+              id="State_input"
+              [(ngModel)]="state"
+              type="text"
+              placeholder="Enter your state"
+            />
+  
+            <input
+              id="Pin_input"
+              [(ngModel)]="pincode"
+              type="number"
+              placeholder="Enter pin code"
+            />
+          </div>
+        </div>
+        <button
+          class="submit_btn"
+          (click)="OnSubmit()"
+          type="submit"
+          id="Submit_form"
+        >
+          Submit
+        </button>
+      </section>
+    </section>
+  </div>
+  

@@ -1,0 +1,103 @@
+<div class="Delivery_Page_Container headergap">
+    <div class="Delivery_left">
+      <div class="Delivery_profile del_shadows">
+        <div class="del_p_img">
+          <i class="ri-user-follow-line"></i>
+          <h2 class="width20vw">
+            <label ID="userName" runat="server" Text="User">{{
+              user_name
+            }}</label>
+          </h2>
+        </div>
+      </div>
+      <!-- address -->
+      <div class="delivery_page_ad del_shadows">
+        <div class="del_ad_heading">
+          <i class="ri-map-pin-2-line"></i>
+          <h2>Delivery Address</h2>
+        </div>
+        <div class="map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3768.143247952875!2d72.9770604951335!3d19.18894470859938!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1704011280948!5m2!1sen!2sin"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+        <div class="del_address_text">
+          {{ user_address ? user_address : "No Address available" }}
+        </div>
+        <div class="del_number">
+          {{ user_phonenumber ? user_phonenumber : "no phone number" }}
+        </div>
+        <button type="button">continue</button>
+      </div>
+  
+      <!--  -->
+    </div>
+    <div class="Delivery_right">
+      <div class="del_dialog del_shadows">
+        <h2>Delivery Time</h2>
+        <div class="del_mid_dialog">
+          <h4>Deliver Now</h4>
+          <p>Your order will be delivered within <b>60 minutes</b></p>
+        </div>
+      </div>
+      <div class="del_items del_shadows">
+        <span *ngIf="myCartArrayOfObjects.length > 0; else elseBlock">
+          <div *ngFor="let elem of myCartArrayOfObjects" class="del-cart-item">
+            <h3>{{ elem.name }}</h3>
+            <div class="del-cart-side-panel">
+              <img [src]="elem.img" alt="Product Image" />
+              <div class="del-sidepanel-quantity-price">
+                <p class="del-price">${{ elem.price }}</p>
+                <div class="del-quantity">
+                  <button
+                    (click)="minusbtn(elem.id)"
+                    class="del-minus-btn del2panel-btn"
+                  >
+                    -
+                  </button>
+                  <input
+                    class="del-panel-btn del2panel-btn"
+                    type="number"
+                    [value]="elem.quantity"
+                    min="1"
+                  />
+                  <button
+                    (click)="plusbtn(elem.id)"
+                    class="del-plus-btn del2panel-btn"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </span>
+        <ng-template class="cart-item" #elseBlock
+          ><h3>No item in Cart</h3></ng-template
+        >
+        <!-- <%-- --%> -->
+        <div class="bill">
+          <div>Items price</div>
+          <div class="txt_end">${{ total_price }}</div>
+          <div>Packaging Fee</div>
+          <div class="txt_end">+$00.00</div>
+          <div>GST(5%)</div>
+          <div class="txt_end">+$00.00</div>
+          <div>CGST(2.5)</div>
+          <div class="txt_end">$00.00</div>
+          <div>SGST(2.5)</div>
+          <div class="txt_end">$00.10</div>
+        </div>
+        <hr />
+        <div class="bill final_amt">
+          <h2>Payable</h2>
+          <h2 class="txt_end">${{ total_price ? total_price : 0 }}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  

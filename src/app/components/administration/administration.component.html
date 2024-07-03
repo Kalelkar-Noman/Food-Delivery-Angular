@@ -1,0 +1,79 @@
+<div *ngIf="access" id="admin_container" class="headergap">
+  <div class="admin_input_conatiner">
+    <div class="admin_img_preview">
+      <img [src]="imagePreviews" alt="no image to preview" />
+    </div>
+
+    <input
+      type="text"
+      placeholder="Image link here"
+      name="imagein"
+      id="imagein"
+      [(ngModel)]="imagePreviewsLink"
+      (change)="onchange()"
+    />
+    <input
+      id="Item_id"
+      type="text"
+      [(ngModel)]="id"
+      placeholder="id : only on update/search/Delete"
+    />
+    <input
+      id="Item_name"
+      [(ngModel)]="name"
+      type="text"
+      placeholder="Enter Product Name"
+    />
+    <input
+      id="Item_price"
+      [(ngModel)]="price"
+      type="number"
+      placeholder="Enter Product Price"
+    />
+    <input
+      id="Item_category"
+      type="text"
+      list="previousCategory"
+      [(ngModel)]="category"
+      placeholder="Enter Product Category"
+    />
+    <datalist id="previousCategory">
+      <option
+        *ngFor="let product of receivedCategoryData; index as i"
+        [value]="product"
+      ></option>
+    </datalist>
+
+    <input
+      id="Item_description"
+      type="text"
+      placeholder="Enter Product description"
+      [(ngModel)]="description"
+    />
+    <div class="admin_button_container">
+      <button id="admin_add_submit" (click)="insertItems()">Add</button>
+      <button id="admin_update_submit" (click)="updateItems()">Update</button>
+      <button id="admin_search_submit" (click)="fetchItems()">Search</button>
+      <button id="admin_delete_submit" (click)="deleteItems()">Delete</button>
+    </div>
+    <!-- </form> -->
+  </div>
+  <div class="admin_preview">
+    <div
+      (click)="infoLoader(i)"
+      *ngFor="let item of searchData; index as i"
+      class="previewBorder"
+    >
+      <h3>ID:{{ item.item_id }}</h3>
+      <div class="flex">
+        <img [src]="item.item_image" alt="image" class="data_image" />
+        <div>
+          <p>Category :{{ item.item_category }}</p>
+          <p>Name :{{ item.item_name }}</p>
+          <p>Price :{{ item.item_price }}</p>
+        </div>
+      </div>
+      <p class="description">Description : {{ item.item_description }}</p>
+    </div>
+  </div>
+</div>

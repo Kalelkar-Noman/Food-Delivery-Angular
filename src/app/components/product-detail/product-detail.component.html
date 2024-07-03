@@ -1,0 +1,28 @@
+<div *ngIf="dataAvailable" class="detailpage-container">
+    <div class="product-container">
+      <img [src]="image" alt="Product Image" />
+      <div class="detail-left">
+        <div class="product-info">
+          <div>
+            <h2>{{ name }}</h2>
+            <p>Price: ₹ {{ price }}</p>
+          </div>
+          <div class="quantity-button" id="quantity-button">
+            <div id="add-div" *ngIf="!isAddClicked" (click)="addBtnClicked()">Add</div>
+            <div *ngIf="isAddClicked" class="quantity">
+              <button (click)="minusbtn(product[0].item_id)" class="minus-btn panel-btn">-</button>
+              <input type="number" disabled [value]="ProductQuantity">
+              <button (click)="plusbtn(product[0].item_id)" class="plus-btn panel-btn">+</button>
+            </div>
+          </div>
+          <div>
+            <h2>Description:</h2>
+            <p>{{ description ? description : "no description available" }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!dataAvailable" class="detailpage-container">
+    <h1>Sorry no data found</h1>
+  </div>

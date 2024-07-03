@@ -1,0 +1,128 @@
+<div class="mainpage-container headergap">
+  <div
+    id="carousel-prev"
+    (click)="carouselPrevBtnClick()"
+    class="carousel-prev"
+  >
+    <div class="carousel-arrow"><</div>
+  </div>
+  <div
+    id="carousel-next"
+    (click)="carouselNextBtnClick()"
+    class="carousel-next"
+  >
+    <div class="carousel-arrow">></div>
+  </div>
+  <div class="carousel-items">
+    <!-- category items -->
+    <span>
+      <button
+        id="Inner_Menu-1"
+        (click)="selectedCategoryLoad(-1, '*')"
+        runat="server"
+        class="inner-con inner-con-active"
+      >
+        <div class="menu-scroller"><span class="category_icon">All</span></div>
+        <p class="mybtn">All</p>
+      </button>
+    </span>
+
+    <span *ngFor="let item of UniqueCategoryIconList; index as i">
+      <button
+        [id]="'Inner_Menu' + i"
+        (click)="selectedCategoryLoad(i, item)"
+        class="inner-con"
+      >
+        <div class="menu-scroller">
+          <span class="category_icon">{{ categoryIcon(item) }}</span>
+        </div>
+        <p class="mybtn">{{ item }}</p>
+      </button>
+    </span>
+    <!-- category items end-->
+  </div>
+</div>
+<div class="product-cards">
+  <!-- products items-->
+  <div *ngFor="let product of Itemsdata; index as i" class="product-card">
+    <a (click)="navigateToDetails(product.item_id)">
+      <div class="badge">Hot</div>
+      <span class="product-tumb" id="Link_to_Details">
+        <img loading="lazy" [src]="product.item_image" alt="text" />
+      </span>
+      <div class="product-details">
+        <span class="product-catagory">{{ product.item_category }}</span>
+        <h4>
+          <a>{{ product.item_name }}</a>
+        </h4>
+        <p>{{ product.item_description }}</p>
+        <div class="product-bottom-details">
+          <div class="product-price">
+            <small>$96.00</small>{{ product.item_price }}
+          </div>
+          <div class="product-links">
+            <a
+              (click)="addToCart(product, $event)"
+              href="#"
+              class="for-asp-access"
+              ><i class="ri-shopping-cart-fill"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+  <!-- products items end -->
+</div>
+
+<button class="open-button" (click)="cartOpenClose()" id="cart-button">
+  <svg
+    class="icon-cart"
+    viewBox="0 0 24.38 30.52"
+    height="30.52"
+    width="24.38"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <title>icon-cart</title>
+    <path
+      transform="translate(-3.62 -0.85)"
+      d="M28,27.3,26.24,7.51a.75.75,0,0,0-.76-.69h-3.7a6,6,0,0,0-12,0H6.13a.76.76,0,0,0-.76.69L3.62,27.3v.07a4.29,4.29,0,0,0,4.52,4H23.48a4.29,4.29,0,0,0,4.52-4ZM15.81,2.37a4.47,4.47,0,0,1,4.46,4.45H11.35a4.47,4.47,0,0,1,4.46-4.45Zm7.67,27.48H8.13a2.79,2.79,0,0,1-3-2.45L6.83,8.34h3V11a.76.76,0,0,0,1.52,0V8.34h8.92V11a.76.76,0,0,0,1.52,0V8.34h3L26.48,27.4a2.79,2.79,0,0,1-3,2.44Zm0,0"
+    ></path>
+  </svg>
+</button>
+<div id="mySidepanel" class="sidepanel headergap active">
+  <span href="#" class="closebtn" (click)="cartOpenClose()" id="cart-close"
+    >×</span
+  >
+  <!-- <p>This is the side panel content.</p> -->
+  <span *ngIf="myCartArrayOfObjects.length > 0; else elseBlock">
+    <h4 *ngIf="true">Log in to order</h4>
+    <div *ngFor="let elem of myCartArrayOfObjects" class="cart-item">
+      <h3>{{ elem.name }}</h3>
+      <div class="cart-side-panel">
+        <img [src]="elem.img" loading="lazy" alt="Product Image" />
+        <div class="sidepanel-quantity-price">
+          <p class="price">${{ elem.price }}</p>
+          <div class="quantity">
+            <button (click)="minusbtn(elem.id)" class="minus-btn panel-btn">
+              -
+            </button>
+            <input
+              class="panel-btn"
+              type="number"
+              [value]="elem.quantity"
+              min="1"
+            />
+            <button (click)="plusbtn(elem.id)" class="plus-btn panel-btn">
+              +
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </span>
+  <ng-template class="cart-item" #elseBlock
+    ><h3>No item in Cart</h3></ng-template
+  >
+  <!--  -->
+</div>
