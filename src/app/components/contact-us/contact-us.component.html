@@ -10,14 +10,16 @@
           <div class="app-contact">CONTACT INFO : +91 9372566312</div>
         </div>
         <div class="screen-body-item">
-          <div class="app-form">
+          <form class="app-form" name="contact" method="POST" netlify>
             <div class="app-form-group">
-              <input class="app-form-control" type="text" placeholder="NAME" />
+              <input class="app-form-control" id="name" name="name" type="text" placeholder="NAME" />
             </div>
             <div class="app-form-group">
               <input
                 class="app-form-control"
                 type="email"
+                id="email"
+                name="email"
                 placeholder="EMAIL"
               />
             </div>
@@ -26,6 +28,8 @@
                 class="app-form-control"
                 type="text"
                 placeholder="Subject"
+                id="subject"
+                name="subject"
               />
             </div>
             <div class="app-form-group message">
@@ -33,14 +37,16 @@
                 class="app-form-control"
                 type="text"
                 placeholder="MESSAGE"
+                name="message"
+                id="message"
               />
             </div>
             <div class="app-form-group buttons">
-              <button type="submit" class="app-form-button" id="contactmail">
+              <button type="submit" name="contactmail" class="app-form-button" id="contactmail">
                 SEND
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
