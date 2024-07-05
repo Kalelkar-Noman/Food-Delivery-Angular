@@ -96,7 +96,6 @@
   >
   <!-- <p>This is the side panel content.</p> -->
   <span *ngIf="myCartArrayOfObjects.length > 0; else elseBlock">
-    <h4 *ngIf="true">Log in to order</h4>
     <div *ngFor="let elem of myCartArrayOfObjects" class="cart-item">
       <h3>{{ elem.name }}</h3>
       <div class="cart-side-panel">
