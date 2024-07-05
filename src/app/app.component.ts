@@ -67,6 +67,15 @@ export class AppComponent {
   loginClose() {
     document.getElementById('login')?.classList.remove('show-login');
   }
+
+  checkAccessAndRedirect(pageName: string) {
+    if (this.isLoggedIn) {
+      this.router.navigate([pageName]);
+    } else {
+      alert('Please Login First');
+    }
+  }
+
   loginOpen() {
     this.userToken = this.supabaseService.getCookieValue('Id');
     if (this.userToken && this.userToken != 'null') {

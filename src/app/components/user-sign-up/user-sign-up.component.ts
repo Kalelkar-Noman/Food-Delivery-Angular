@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SupabaseService } from '../../services/supabase.service';
 import { Router } from '@angular/router';
+import emailjs, { type EmailJSResponseStatus } from '@emailjs/browser';
 
 @Component({
   selector: 'app-user-sign-up',
@@ -23,19 +24,47 @@ export class UserSignUpComponent {
   constructor(
     private supabaseService: SupabaseService,
     private router: Router
-  ) {}
+  ) {
+    emailjs.init({
+      publicKey: 'dDFXYIgZV1O0PWQR5',
+    });
+  }
   // OTP generation
 
   GenerateOtp() {
-    let otp = '';
-    for (let i = 0; i < 6; i++) {
-      otp += Math.floor(Math.random() * 10); // Generate a random digit between 0 and 9
+    if (this.emailaddress.length > 0 && this.name.length > 0) {
+      if (this.emailaddress) {
+        const gmailRegex = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+        if (gmailRegex.test(this.emailaddress)) {
+          let otp = '';
+          for (let i = 0; i < 6; i++) {
+            otp += Math.floor(Math.random() * 10); // Generate a random digit between 0 and 9
+          }
+          this.Otp = otp;
+          emailjs
+            .send('service_nhseehn', 'template_um2lkil', {
+              to_name: this.name,
+              message: this.Otp,
+              to_email: this.emailaddress,
+            })
+            .then(
+              (response) => {
+                if (response.status === 200) {
+                  // Check for success status code
+                  alert('Otp Sent Successfully');
+                } else {
+                  console.error('Email sending failed:', response); // Log the response for debugging
+                }
+              }
+              // Handle error in the catch block (unchanged)
+            );
+        } else {
+          alert('The email address is not valid');
+        }
+      }
+    } else {
+      alert('Please enter the email address and name');
     }
-    this.Otp = otp;
-    alert(
-      'Sorry our api limit reached we cannot send email as it is a dummy project its not a problem  Here is your OTP:' +
-        this.Otp
-    );
   }
 
   userToken: any = '';
